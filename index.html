@@ -78,8 +78,9 @@
 
   /* buttons */
   .btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;
-    padding:14px 26px;border-radius:100px;transition:.35s var(--ease);cursor:pointer;border:none;
-    white-space:nowrap}
+    padding:14px 26px;border-radius:100px;cursor:pointer;border:none;white-space:nowrap;
+    transition:background-color .35s var(--ease),box-shadow .35s var(--ease),
+      border-color .35s var(--ease),color .35s var(--ease)}
   .btn-primary{background:var(--orange);color:#fff;box-shadow:0 8px 24px -8px rgba(255,107,26,.6)}
   .btn-primary:hover{background:var(--orange-deep);transform:translateY(-2px);box-shadow:0 14px 32px -10px rgba(255,107,26,.7)}
   .btn-ghost{background:transparent;color:var(--on-dark);border:1px solid var(--line-dark)}
@@ -546,6 +547,8 @@
 
   /* gsap drives reveals → kill CSS transition to avoid double-animation */
   html.gsap-on .reveal,html.gsap-on .reveal-big{transition:none}
+  /* split-text characters */
+  .ch{display:inline-block;will-change:transform}
 
   /* ════════════ 3D SCENE LAYER ════════════ */
   #gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
@@ -1287,6 +1290,71 @@
   }));
 
   /* ───── reveals + scroll effects (after preloader) ───── */
+  /* wrap each character of a heading in a span (preserves <br>) */
+  function splitChars(el){
+    const frag=document.createDocumentFragment();
+    [...el.childNodes].forEach(node=>{
+      if(node.nodeType===3){
+        for(const ch of node.textContent){
+          if(ch.trim()===''){frag.appendChild(document.createTextNode(ch));continue;}
+          const s=document.createElement('span');
+          s.className='ch';s.textContent=ch;
+          frag.appendChild(s);
+        }
+      } else frag.appendChild(node.cloneNode(true));
+    });
+    el.innerHTML='';el.appendChild(frag);
+    return el.querySelectorAll('.ch');
+  }
+
+  /* magnetic buttons — pull toward the cursor, spring back on leave */
+  function magnetize(){
+    if(matchMedia('(hover:none)').matches) return;
+    $$('.btn').forEach(btn=>{
+      let tx=0,ty=0,cx=0,cy=0,raf=null;
+      const tick=()=>{
+        cx+=(tx-cx)*.16; cy+=(ty-cy)*.16;
+        btn.style.transform=`translate(${cx.toFixed(2)}px,${cy.toFixed(2)}px)`;
+        if(Math.abs(tx-cx)>.08||Math.abs(ty-cy)>.08) raf=requestAnimationFrame(tick);
+        else{raf=null;if(!tx&&!ty)btn.style.transform='';}
+      };
+      btn.addEventListener('mousemove',e=>{
+        const r=btn.getBoundingClientRect();
+        tx=(e.clientX-(r.left+r.width/2))*.34;
+        ty=(e.clientY-(r.top+r.height/2))*.5;
+        if(!raf) tick();
+      });
+      btn.addEventListener('mouseleave',()=>{tx=0;ty=0;if(!raf)tick();});
+    });
+  }
+  magnetize();
+
+  /* ambient colour shifts between sections (body bg + 3D fog follow) */
+  function buildColorBeats(){
+    if(!hasGSAP) return;
+    [['header.hero','#0a0a0d'],
+     ['#manifesto','#120a06'],
+     ['#problem','#0a0a0d'],
+     ['#system','#0e0a13'],
+     ['#why','#130b06'],
+     ['#member','#081016'],
+     ['#desk','#0d0a08'],
+     ['#owner','#090b0e'],
+     ['#compliance','#130905'],
+     ['#cta','#150d06']
+    ].forEach(([sel,col])=>{
+      const el=document.querySelector(sel); if(!el) return;
+      const go=()=>{
+        gsap.to('body',{backgroundColor:col,duration:1.4,ease:'power2.out',overwrite:'auto'});
+        if(three&&three.fog&&window.THREE){
+          const c=new THREE.Color(col);
+          gsap.to(three.fog.color,{r:c.r,g:c.g,b:c.b,duration:1.4,ease:'power2.out',overwrite:'auto'});
+        }
+      };
+      ScrollTrigger.create({trigger:el,start:'top 55%',end:'bottom 55%',onEnter:go,onEnterBack:go});
+    });
+  }
+
   /* split block-level reveals into per-element staggered reveals;
      headings get their own bigger cinematic move */
   function autoSplitReveals(){
@@ -1314,21 +1382,27 @@
     }
     document.documentElement.classList.add('gsap-on');
     autoSplitReveals();
+    /* hero entrance after preloader */
+    gsap.from('.hero-eyebrow,.hero h1,.hero-sub,.hero-actions,.hero-tags',
+      {y:42,opacity:0,filter:'blur(8px)',duration:1.1,ease:'power3.out',stagger:.09,delay:.05,clearProps:'filter'});
     gsap.set('.reveal',{y:44,opacity:0,filter:'blur(10px)'});
-    gsap.set('.reveal-big',{y:80,opacity:0,filter:'blur(16px)'});
     ScrollTrigger.batch('.reveal',{
       start:'top 88%',
       onEnter:els=>gsap.to(els,{y:0,opacity:1,filter:'blur(0px)',duration:1.15,ease:'power3.out',stagger:0.08,overwrite:true}),
       once:true
     });
-    ScrollTrigger.batch('.reveal-big',{
-      start:'top 86%',
-      onEnter:els=>gsap.to(els,{y:0,opacity:1,filter:'blur(0px)',duration:1.35,ease:'power4.out',stagger:0.12,overwrite:true}),
-      once:true
+    /* big headings: split-text — characters rise one by one */
+    $$('.reveal-big').forEach(h=>{
+      const chars=splitChars(h);
+      gsap.set(h,{opacity:1,y:0});
+      gsap.set(chars,{yPercent:125,opacity:0,rotate:5});
+      ScrollTrigger.create({trigger:h,start:'top 86%',once:true,
+        onEnter:()=>gsap.to(chars,{yPercent:0,opacity:1,rotate:0,duration:.9,ease:'power4.out',stagger:.04})});
     });
     buildManifesto();
     buildParallax();
     buildSceneBeats();
+    buildColorBeats();
     /* rAF is frozen in hidden tabs — race it with a timeout so init always runs */
     let booted=false;
     const boot=()=>{
@@ -1431,7 +1505,7 @@
     const embers=field(isMobile?90:200,[34,20,26],0xff8a47,.3,.7,texOrange);
 
     const tgt={x:2.6,y:0,scale:1};
-    three={tgt};
+    three={tgt,fog:scene.fog};
     const m={x:0,y:0};
     window.addEventListener('mousemove',e=>{m.x=e.clientX/innerWidth*2-1;m.y=e.clientY/innerHeight*2-1;});
     function rs(){renderer.setSize(innerWidth,innerHeight,false);renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();}
