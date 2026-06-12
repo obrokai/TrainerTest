@@ -59,8 +59,8 @@
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
 
   /* ── reveal ── */
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
-  .reveal.in{opacity:1;transform:none}
+  .reveal,.reveal-big{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  .reveal.in,.reveal-big.in{opacity:1;transform:none}
   .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}
   .reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}.reveal.d5{transition-delay:.4s}
 
@@ -140,9 +140,9 @@
     line-height:1.04;margin-bottom:26px}
   .hero h1 .grad{background:linear-gradient(105deg,var(--orange) 0%,var(--orange-soft) 55%,#ffd0a8 100%);
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .hero-sub{font-size:clamp(16px,1.9vw,20px);color:var(--on-dark-mute);max-width:520px;
-    line-height:1.65;margin-bottom:38px}
-  .hero-sub b{color:rgba(255,255,255,.9);font-weight:600}
+  .hero-sub{font-size:clamp(17px,2vw,22px);color:var(--on-dark-mute);max-width:620px;
+    line-height:1.65;margin-bottom:42px;letter-spacing:.04em}
+  .hero-sub b{color:rgba(255,255,255,.92);font-weight:600}
   .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:46px}
   .hero-tags{display:flex;flex-wrap:wrap;gap:10px}
   .hero-tags .tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;
@@ -214,12 +214,14 @@
     animation:wheel 1.8s infinite}
   @keyframes wheel{0%{opacity:0;transform:translateY(-3px)}40%{opacity:1}80%,100%{opacity:0;transform:translateY(8px)}}
 
-  /* marquee strip */
-  .strip{background:var(--orange);overflow:hidden;padding:16px 0}
-  .strip .track{display:flex;gap:48px;white-space:nowrap;animation:marq 28s linear infinite;width:max-content}
-  .strip .track span{display:inline-flex;align-items:center;gap:48px;color:#fff;font-weight:700;
-    font-size:15px;letter-spacing:.02em}
-  .strip .track span::after{content:"";width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55)}
+  /* marquee strip — ghost band */
+  .strip{background:rgba(255,107,26,.05);border-top:1px solid rgba(255,107,26,.22);
+    border-bottom:1px solid rgba(255,107,26,.22);overflow:hidden;padding:14px 0;
+    backdrop-filter:blur(4px)}
+  .strip .track{display:flex;gap:48px;white-space:nowrap;animation:marq 30s linear infinite;width:max-content}
+  .strip .track span{display:inline-flex;align-items:center;gap:48px;color:var(--orange-soft);font-weight:600;
+    font-size:13.5px;letter-spacing:.1em}
+  .strip .track span::after{content:"";width:5px;height:5px;border-radius:50%;background:rgba(255,138,71,.45)}
   @keyframes marq{to{transform:translateX(-50%)}}
 
   /* ════════════ PROBLEM ════════════ */
@@ -543,7 +545,7 @@
   .mani-prog span i{display:block;height:100%;width:0;background:var(--orange);border-radius:3px}
 
   /* gsap drives reveals → kill CSS transition to avoid double-animation */
-  html.gsap-on .reveal{transition:none}
+  html.gsap-on .reveal,html.gsap-on .reveal-big{transition:none}
 
   /* ════════════ 3D SCENE LAYER ════════════ */
   #gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
@@ -650,7 +652,7 @@
     <div class="hero-body">
       <span class="hero-eyebrow"><span class="dot"></span>流程與體驗導覽</span>
       <h1>健身房的每一步，<br><span class="grad">都自動跑起來。</span></h1>
-      <p class="hero-sub"><b>AI 整合 × LINE 綁定 × 一條龍服務。</b>學員在 LINE 完成綁定、查詢與約課，櫃檯用 AI 對話操作，老闆看報表做決策——一套系統，全部到位。</p>
+      <p class="hero-sub"><b>AI 整合 × LINE 綁定 × 一條龍服務</b></p>
       <div class="hero-actions">
         <a href="#cta" class="btn btn-primary">預約現場 Demo<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <a href="#system" class="btn btn-ghost">看系統如何運作</a>
@@ -1285,19 +1287,43 @@
   }));
 
   /* ───── reveals + scroll effects (after preloader) ───── */
+  /* split block-level reveals into per-element staggered reveals;
+     headings get their own bigger cinematic move */
+  function autoSplitReveals(){
+    $$('.sec-head.reveal').forEach(h=>{
+      h.classList.remove('reveal');
+      [...h.children].forEach(c=>c.classList.add('reveal'));
+    });
+    $$('.fr-body.reveal').forEach(b=>{
+      b.classList.remove('reveal');
+      const h=b.querySelector('h2'); if(h) h.classList.add('reveal');
+      $$('.fi',b).forEach(f=>f.classList.add('reveal'));
+    });
+    $$('.h-sec, .chapter h2, .fr-body h2').forEach(h=>{
+      h.classList.remove('reveal'); h.classList.add('reveal-big');
+    });
+  }
+
   let started=false;
   function startReveals(){
     if(started) return; started=true;
     if(!hasGSAP){
-      $$('.reveal').forEach(e=>e.classList.add('in'));
+      $$('.reveal,.reveal-big').forEach(e=>e.classList.add('in'));
       buildFlowLine(); startFlowTicker();
       return;
     }
     document.documentElement.classList.add('gsap-on');
-    gsap.set('.reveal',{y:32,opacity:0});
+    autoSplitReveals();
+    gsap.set('.reveal',{y:44,opacity:0,filter:'blur(10px)'});
+    gsap.set('.reveal-big',{y:80,opacity:0,filter:'blur(16px)'});
     ScrollTrigger.batch('.reveal',{
       start:'top 88%',
-      onEnter:els=>gsap.to(els,{y:0,opacity:1,duration:1,ease:'power3.out',stagger:0.09,overwrite:true}),
+      onEnter:els=>gsap.to(els,{y:0,opacity:1,filter:'blur(0px)',duration:1.15,ease:'power3.out',stagger:0.08,overwrite:true}),
+      once:true
+    });
+    ScrollTrigger.batch('.reveal-big',{
+      start:'top 86%',
+      onEnter:els=>gsap.to(els,{y:0,opacity:1,filter:'blur(0px)',duration:1.35,ease:'power4.out',stagger:0.12,overwrite:true}),
       once:true
     });
     buildManifesto();
@@ -1362,15 +1388,17 @@
     const cam=new THREE.PerspectiveCamera(50,1,0.1,120);
     cam.position.set(0,0,9.5);
 
-    /* soft round glow texture for star-like particles */
+    /* soft blur-gradient glow texture — long smooth falloff */
     function makeGlowTex(r,g,b){
-      const c=document.createElement('canvas');c.width=c.height=64;
+      const c=document.createElement('canvas');c.width=c.height=128;
       const x=c.getContext('2d');
-      const gr=x.createRadialGradient(32,32,0,32,32,32);
-      gr.addColorStop(0,`rgba(${r},${g},${b},1)`);
-      gr.addColorStop(.3,`rgba(${r},${g},${b},.55)`);
+      const gr=x.createRadialGradient(64,64,0,64,64,64);
+      gr.addColorStop(0,`rgba(${r},${g},${b},.95)`);
+      gr.addColorStop(.2,`rgba(${r},${g},${b},.5)`);
+      gr.addColorStop(.45,`rgba(${r},${g},${b},.2)`);
+      gr.addColorStop(.7,`rgba(${r},${g},${b},.07)`);
       gr.addColorStop(1,`rgba(${r},${g},${b},0)`);
-      x.fillStyle=gr;x.fillRect(0,0,64,64);
+      x.fillStyle=gr;x.fillRect(0,0,128,128);
       return new THREE.CanvasTexture(c);
     }
     const texWhite=makeGlowTex(255,255,255), texOrange=makeGlowTex(255,138,71);
@@ -1383,11 +1411,11 @@
     const dots=new THREE.Points(ICO,new THREE.PointsMaterial({color:0xffd9bd,size:.18,map:texWhite,transparent:true,opacity:.9,depthWrite:false,blending:THREE.AdditiveBlending}));
     const ring=new THREE.Mesh(new THREE.TorusGeometry(3.6,.012,8,140),new THREE.MeshBasicMaterial({color:0xff6b1a,transparent:true,opacity:.3}));
     ring.rotation.x=Math.PI/2.4;
-    /* halo glow around the sphere */
-    const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:texOrange,transparent:true,opacity:.4,blending:THREE.AdditiveBlending,depthWrite:false}));
-    glow.scale.set(9,9,1);
-    const glowCore=new THREE.Sprite(new THREE.SpriteMaterial({map:texOrange,transparent:true,opacity:.25,blending:THREE.AdditiveBlending,depthWrite:false}));
-    glowCore.scale.set(4.5,4.5,1);
+    /* halo glow around the sphere — wide soft blur-gradient layers */
+    const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:texOrange,transparent:true,opacity:.3,blending:THREE.AdditiveBlending,depthWrite:false}));
+    glow.scale.set(13,13,1);
+    const glowCore=new THREE.Sprite(new THREE.SpriteMaterial({map:texOrange,transparent:true,opacity:.18,blending:THREE.AdditiveBlending,depthWrite:false}));
+    glowCore.scale.set(6,6,1);
     grp.add(glow,glowCore,wire,inner,dots,ring);
 
     /* deep star fields — soft round glow points */
@@ -1424,8 +1452,8 @@
       inner.rotation.y=-t*.25-p*Math.PI*1.6;
       inner.rotation.z=t*.18;
       ring.rotation.z=t*.07+p*2;
-      glow.material.opacity=.34+Math.sin(t*1.1)*.08;
-      glowCore.material.opacity=.2+Math.sin(t*1.7+1)*.06;
+      glow.material.opacity=.26+Math.sin(t*1.1)*.06;
+      glowCore.material.opacity=.15+Math.sin(t*1.7+1)*.05;
       stars.rotation.y=t*.012+p*.55;
       embers.rotation.y=-t*.02-p*.4;
       /* mouse parallax orbit */
