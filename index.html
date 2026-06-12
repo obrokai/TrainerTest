@@ -92,8 +92,11 @@
   /* sections */
   section{position:relative}
   .sec{padding:120px 0}
-  .sec-dark{background:var(--ink);color:var(--on-dark)}
-  .sec-paper{background:var(--paper);color:var(--fg)}
+  .sec-dark{background:transparent;color:var(--on-dark)}
+  .sec-paper{background:transparent;color:var(--on-dark)}
+  .sec-paper .lead{color:var(--on-dark-mute)}
+  .sec-paper .flist .fi p{color:var(--on-dark-mute)}
+  .sec-paper .phone{box-shadow:0 40px 80px -28px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.05)}
   .on-dark{color:var(--on-dark)}
 
   /* ════════════ NAV ════════════ */
@@ -119,15 +122,15 @@
 
   /* ════════════ HERO ════════════ */
   .hero{position:relative;min-height:100vh;display:flex;align-items:center;
-    background:var(--ink);overflow:hidden;padding:140px 0 80px}
+    background:transparent;overflow:hidden;padding:140px 0 80px}
   #heroCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.9}
   .hero-glow{position:absolute;z-index:1;width:760px;height:760px;border-radius:50%;
     background:radial-gradient(circle,rgba(255,107,26,.22),transparent 62%);
     top:-180px;right:-180px;filter:blur(20px);pointer-events:none}
   .hero-glow.two{width:520px;height:520px;bottom:-200px;left:-160px;top:auto;right:auto;
     background:radial-gradient(circle,rgba(255,107,26,.12),transparent 64%)}
-  .hero .wrap{position:relative;z-index:3;display:grid;grid-template-columns:1.08fr .92fr;
-    gap:60px;align-items:center}
+  .hero .wrap{position:relative;z-index:3;display:block}
+  .hero-body{max-width:780px}
   .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12.5px;font-weight:700;
     letter-spacing:.18em;text-transform:uppercase;color:var(--orange-soft);margin-bottom:26px}
   .hero-eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--orange);
@@ -221,16 +224,15 @@
 
   /* ════════════ PROBLEM ════════════ */
   .prob-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:60px}
-  .prob-card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px 22px;
-    transition:.4s var(--ease);position:relative;overflow:hidden}
-  .prob-card:hover{transform:translateY(-6px);box-shadow:0 24px 48px -22px rgba(20,20,30,.22);
-    border-color:rgba(255,107,26,.3)}
+  .prob-card{background:rgba(255,255,255,.045);backdrop-filter:blur(8px);border:1px solid var(--line-dark);
+    border-radius:var(--r);padding:26px 22px;transition:.4s var(--ease);position:relative;overflow:hidden}
+  .prob-card:hover{transform:translateY(-6px);border-color:rgba(255,138,71,.4);background:rgba(255,107,26,.07)}
   .prob-card .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;
-    background:linear-gradient(150deg,#fff3ec,#ffe6d6);color:var(--orange-deep);margin-bottom:20px}
+    background:rgba(255,107,26,.13);color:var(--orange-soft);margin-bottom:20px}
   .prob-card .ic svg{width:22px;height:22px}
-  .prob-card h3{font-size:17px;font-weight:700;margin-bottom:9px;color:var(--fg)}
-  .prob-card p{font-size:13.5px;color:var(--fg-mute);line-height:1.6}
-  .prob-foot{display:flex;align-items:center;gap:12px;margin-top:48px;font-size:18px;font-weight:600;color:var(--fg)}
+  .prob-card h3{font-size:17px;font-weight:700;margin-bottom:9px;color:#fff}
+  .prob-card p{font-size:13.5px;color:var(--on-dark-mute);line-height:1.6}
+  .prob-foot{display:flex;align-items:center;gap:12px;margin-top:48px;font-size:18px;font-weight:600;color:#fff}
   .prob-foot .ar{width:34px;height:34px;border-radius:50%;background:var(--orange);color:#fff;
     display:grid;place-items:center;flex:0 0 auto}
 
@@ -260,14 +262,14 @@
   .map-core p{color:rgba(255,255,255,.82);font-size:11px;font-weight:600;margin-top:5px;line-height:1.5}
 
   /* ════════════ CHAPTER DIVIDER ════════════ */
-  .chapter{background:var(--orange);color:#fff;padding:110px 0;position:relative;overflow:hidden}
+  .chapter{background:transparent;color:#fff;padding:110px 0;position:relative;overflow:hidden}
   .chapter::before{content:"";position:absolute;right:-6%;top:50%;transform:translateY(-50%);
     width:520px;height:520px;opacity:.13;
     background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M55 8 L30 52 L48 52 L42 92 L72 40 L52 40 Z' fill='%23fff'/%3E%3C/svg%3E") center/contain no-repeat}
   .chapter .num{font-family:var(--mono);font-size:clamp(90px,15vw,180px);font-weight:700;
-    line-height:.8;color:rgba(255,255,255,.22);letter-spacing:-.04em;margin-bottom:6px}
+    line-height:.8;color:rgba(255,138,71,.3);letter-spacing:-.04em;margin-bottom:6px}
   .chapter h2{font-size:clamp(34px,5vw,58px);font-weight:900;color:#fff;letter-spacing:-.03em;margin-bottom:18px}
-  .chapter p{font-size:clamp(15px,1.7vw,18px);color:rgba(255,255,255,.85);max-width:560px;font-weight:500}
+  .chapter p{font-size:clamp(15px,1.7vw,18px);color:var(--on-dark-mute);max-width:560px;font-weight:500}
 
   /* ════════════ FEATURE ROWS ════════════ */
   .frow{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;padding:54px 0}
@@ -428,7 +430,7 @@
   .cta-box .btn-white:hover{transform:translateY(-3px);box-shadow:0 16px 36px -12px rgba(0,0,0,.4)}
 
   /* ════════════ FOOTER ════════════ */
-  footer{background:var(--ink);border-top:1px solid var(--line-dark);padding:60px 0 40px;color:var(--on-dark)}
+  footer{background:transparent;border-top:1px solid var(--line-dark);padding:60px 0 40px;color:var(--on-dark)}
   .foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;
     padding-bottom:40px;border-bottom:1px solid var(--line-dark);flex-wrap:wrap}
   .foot-brand{max-width:320px}
@@ -447,27 +449,28 @@
 
   /* ════════════ WHY / DIFFERENTIATORS ════════════ */
   .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:56px}
-  .why-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);
+  .why-card{position:relative;background:rgba(255,255,255,.045);backdrop-filter:blur(8px);
+    border:1px solid var(--line-dark);border-radius:var(--r-lg);
     padding:38px 34px;overflow:hidden;transition:.45s var(--ease)}
-  .why-card:hover{transform:translateY(-6px);box-shadow:0 30px 60px -28px rgba(20,20,30,.22)}
-  .why-card.hl{background:linear-gradient(165deg,#fff6f0,#fff);border-color:rgba(255,107,26,.28)}
+  .why-card:hover{transform:translateY(-6px);border-color:rgba(255,138,71,.4)}
+  .why-card.hl{background:rgba(255,107,26,.09);border-color:rgba(255,107,26,.35)}
   .why-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
     background:linear-gradient(90deg,var(--orange),var(--orange-soft));transform:scaleX(0);
     transform-origin:left;transition:.5s var(--ease)}
   .why-card:hover::before{transform:scaleX(1)}
   .why-tag{display:inline-block;font-family:var(--mono);font-size:11.5px;font-weight:700;
-    letter-spacing:.12em;color:var(--orange-deep);background:#fff3ec;padding:6px 13px;border-radius:100px;margin-bottom:24px}
+    letter-spacing:.12em;color:var(--orange-soft);background:rgba(255,107,26,.14);padding:6px 13px;border-radius:100px;margin-bottom:24px}
   .why-ic{width:60px;height:60px;border-radius:17px;display:grid;place-items:center;margin-bottom:24px;
     background:linear-gradient(150deg,var(--orange),var(--orange-deep));color:#fff;
     box-shadow:0 16px 34px -14px rgba(255,107,26,.6)}
   .why-ic svg{width:30px;height:30px}
-  .why-card h3{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:14px;color:var(--fg)}
-  .why-card p{font-size:15px;color:var(--fg-mute);line-height:1.7;margin-bottom:24px}
-  .why-card p strong{color:var(--orange-deep);font-weight:700}
+  .why-card h3{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:14px;color:#fff}
+  .why-card p{font-size:15px;color:var(--on-dark-mute);line-height:1.7;margin-bottom:24px}
+  .why-card p strong{color:var(--orange-soft);font-weight:700}
   .why-points{display:flex;flex-wrap:wrap;gap:9px}
-  .why-points span{font-size:12.5px;font-weight:600;color:#555;background:var(--paper-2);
-    padding:8px 14px;border-radius:100px;border:1px solid var(--line)}
-  .why-card.hl .why-points span{background:#fff;border-color:rgba(255,107,26,.2)}
+  .why-points span{font-size:12.5px;font-weight:600;color:var(--on-dark-mute);background:rgba(255,255,255,.06);
+    padding:8px 14px;border-radius:100px;border:1px solid var(--line-dark)}
+  .why-card.hl .why-points span{background:rgba(255,107,26,.1);border-color:rgba(255,107,26,.3);color:#ffd9bd}
 
   /* ════════════ COMPLIANCE / ZERO COST ════════════ */
   .on-dark .lead strong{color:#fff;font-weight:700}
@@ -526,7 +529,7 @@
   #preloader .pl-count b{color:#fff}
 
   /* ════════════ MANIFESTO (pinned moment) ════════════ */
-  .manifesto{background:var(--ink);color:#fff;position:relative}
+  .manifesto{background:transparent;color:#fff;position:relative}
   .manifesto .pin{height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
   .mani-stage{position:relative;width:100%;text-align:center;padding:0 24px;min-height:120px}
   .mani-eyebrow{position:absolute;top:-150px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;
@@ -544,10 +547,20 @@
 
   /* ════════════ 3D SCENE LAYER ════════════ */
   #gl{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-  body>header,body>section,body>footer,body>.strip{position:relative;z-index:1}
-  /* dark sections become windows onto the 3D scene */
-  html.gl-on .hero,html.gl-on .manifesto,html.gl-on .sec-dark{background:transparent}
+  body>header,body>section,body>footer,body>.strip{position:relative;z-index:2}
   html.gl-on #heroCanvas{display:none}
+
+  /* ════════════ FLOW LINE (scroll-drawn) ════════════ */
+  #flow-wrap{position:absolute;top:0;left:0;width:100%;height:0;z-index:1;pointer-events:none}
+  #flow-wrap svg{display:block;overflow:visible}
+  #flowBase{fill:none;stroke:rgba(255,255,255,.07);stroke-width:2}
+  #flowPath{fill:none;stroke:url(#flowGrad);stroke-width:2.5;stroke-linecap:round;
+    filter:drop-shadow(0 0 7px rgba(255,107,26,.75))}
+  #flowComet{fill:#fff;filter:drop-shadow(0 0 9px #FF6B1A) drop-shadow(0 0 18px rgba(255,107,26,.7))}
+  .flow-node{fill:#15151c;stroke:rgba(255,138,71,.45);stroke-width:1.5;transition:fill .5s,stroke .5s}
+  .flow-node.lit{fill:var(--orange);stroke:#ffd9bd;filter:drop-shadow(0 0 10px rgba(255,107,26,.95))}
+  .flow-ring{fill:none;stroke:rgba(255,138,71,.35);stroke-width:1.5}
+  .flow-ring.lit{stroke:rgba(255,138,71,.8)}
 
   /* ════════════ RESPONSIVE ════════════ */
   @media(max-width:1020px){
@@ -592,6 +605,21 @@
 <!-- ════════════ 3D SCENE ════════════ -->
 <canvas id="gl"></canvas>
 
+<!-- ════════════ FLOW LINE ════════════ -->
+<div id="flow-wrap" aria-hidden="true">
+  <svg preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="flowGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#FF8A47"/>
+        <stop offset="1" stop-color="#FF6B1A"/>
+      </linearGradient>
+    </defs>
+    <path id="flowBase"/>
+    <path id="flowPath"/>
+    <circle id="flowComet" r="4"/>
+  </svg>
+</div>
+
 <!-- ════════════ NAV ════════════ -->
 <nav id="nav">
   <div class="bar">
@@ -632,29 +660,6 @@
         <span class="tag"><i></i>對話式後台</span>
         <span class="tag"><i></i>LINE 會員服務</span>
         <span class="tag"><i></i>營運報表</span>
-      </div>
-    </div>
-
-    <!-- kiosk device -->
-    <div class="kiosk">
-      <div class="kiosk-screen">
-        <div class="kiosk-cam"></div>
-        <div class="kiosk-hi"><span class="welcome">Welcome back</span></div>
-        <div class="face">
-          <div class="head"></div>
-          <div class="scanbox"><span></span><span></span><span></span><span></span></div>
-          <span class="node"></span><span class="node"></span><span class="node"></span>
-          <span class="node"></span><span class="node"></span>
-          <div class="scanline"></div>
-        </div>
-        <div class="kiosk-card">
-          <div class="av">林</div>
-          <div class="info">
-            <div class="nm">林宜蓁</div>
-            <div class="meta">月會籍 · 有效至 2026/12/31</div>
-          </div>
-          <div class="ok"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        </div>
       </div>
     </div>
   </div>
@@ -1316,7 +1321,11 @@
   let started=false;
   function startReveals(){
     if(started) return; started=true;
-    if(!hasGSAP){ $$('.reveal').forEach(e=>e.classList.add('in')); return; }
+    if(!hasGSAP){
+      $$('.reveal').forEach(e=>e.classList.add('in'));
+      buildFlowLine(); startFlowTicker();
+      return;
+    }
     document.documentElement.classList.add('gsap-on');
     gsap.set('.reveal',{y:32,opacity:0});
     ScrollTrigger.batch('.reveal',{
@@ -1327,7 +1336,16 @@
     buildManifesto();
     buildParallax();
     buildSceneBeats();
-    requestAnimationFrame(()=>ScrollTrigger.refresh());
+    /* rAF is frozen in hidden tabs — race it with a timeout so init always runs */
+    let booted=false;
+    const boot=()=>{
+      if(booted) return; booted=true;
+      ScrollTrigger.refresh();
+      buildFlowLine();
+      startFlowTicker();
+    };
+    requestAnimationFrame(boot);
+    setTimeout(boot,400);
   }
 
   /* ───── pinned manifesto timeline ───── */
@@ -1432,23 +1450,106 @@
     })();
   })();
 
-  /* ───── per-section 3D beats ───── */
+  /* ───── per-section 3D beats (object opposite the flow-line node) ───── */
   function buildSceneBeats(){
     if(!three||!hasGSAP) return;
     [['header.hero',{x:2.6,y:0,scale:1}],
      ['#manifesto',{x:0,y:0,scale:1.5}],
-     ['#problem',{x:0,y:-1,scale:3}],
-     ['#system',{x:-2.5,y:.2,scale:.95}],
-     ['#why',{x:2.5,y:0,scale:2.2}],
+     ['#problem',{x:2.4,y:.2,scale:.85}],
+     ['#system',{x:-2.4,y:.2,scale:.9}],
+     ['#why',{x:2.4,y:0,scale:.85}],
+     ['#member',{x:-2.4,y:0,scale:.8}],
      ['#desk',{x:2.4,y:.1,scale:.85}],
-     ['#compliance',{x:-2.4,y:0,scale:.9}],
-     ['#cta',{x:0,y:.4,scale:1.25}]
+     ['#owner',{x:-2.4,y:0,scale:.8}],
+     ['#compliance',{x:2.4,y:0,scale:.9}],
+     ['#cta',{x:0,y:.3,scale:1.2}]
     ].forEach(([sel,v])=>{
       const el=document.querySelector(sel); if(!el) return;
       const go=()=>gsap.to(three.tgt,{...v,duration:1.6,ease:'power2.out',overwrite:'auto'});
       ScrollTrigger.create({trigger:el,start:'top 62%',end:'bottom 62%',onEnter:go,onEnterBack:go});
     });
   }
+
+  /* ───── FLOW LINE — drawn by scroll, nodes light up at each feature ───── */
+  let flow=null;
+  function buildFlowLine(){
+    const wrap=$('#flow-wrap'); if(!wrap) return;
+    const svg=wrap.querySelector('svg');
+    const docH=document.documentElement.scrollHeight;
+    const w=innerWidth;
+    wrap.style.height=docH+'px';
+    svg.setAttribute('viewBox',`0 0 ${w} ${docH}`);
+    svg.setAttribute('width',w); svg.setAttribute('height',docH);
+    /* anchors: hero exit → each feature section (alternating sides) → footer */
+    const hero=document.querySelector('header.hero');
+    const pts=[{x:w*.5,y:hero.offsetHeight*.92}];
+    ['#problem','#system','#why','#member','#desk','#owner','#compliance','#cta'].forEach((s,i)=>{
+      const el=document.querySelector(s); if(!el) return;
+      const r=el.getBoundingClientRect();
+      pts.push({x:i%2?w*.88:w*.12, y:r.top+window.scrollY+r.height*.42});
+    });
+    pts.push({x:w*.5,y:docH-60});
+    let d=`M ${pts[0].x} ${pts[0].y}`;
+    for(let i=1;i<pts.length;i++){
+      const a=pts[i-1],b=pts[i],my=(a.y+b.y)/2;
+      d+=` C ${a.x} ${my} ${b.x} ${my} ${b.x} ${b.y}`;
+    }
+    $('#flowBase').setAttribute('d',d);
+    const fp=$('#flowPath'); fp.setAttribute('d',d);
+    const L=fp.getTotalLength();
+    fp.style.strokeDasharray=L; fp.style.strokeDashoffset=L;
+    /* nodes at each feature anchor */
+    svg.querySelectorAll('.flow-node,.flow-ring').forEach(n=>n.remove());
+    const NS='http://www.w3.org/2000/svg';
+    const nodes=pts.slice(1,-1).map(pt=>{
+      const ring=document.createElementNS(NS,'circle');
+      ring.setAttribute('cx',pt.x);ring.setAttribute('cy',pt.y);ring.setAttribute('r',13);
+      ring.classList.add('flow-ring');
+      const c=document.createElementNS(NS,'circle');
+      c.setAttribute('cx',pt.x);c.setAttribute('cy',pt.y);c.setAttribute('r',5.5);
+      c.classList.add('flow-node');
+      svg.appendChild(ring);svg.appendChild(c);
+      return {c,ring,y:pt.y,len:0,lit:false};
+    });
+    /* map each node's y to a length along the path (single sampling pass) */
+    const S=500; let ti=0;
+    for(let i=0;i<=S&&ti<nodes.length;i++){
+      const l=L*i/S, p=fp.getPointAtLength(l);
+      while(ti<nodes.length&&p.y>=nodes[ti].y-3){nodes[ti].len=l;ti++;}
+    }
+    while(ti<nodes.length){nodes[ti].len=L*(nodes[ti].y/docH);ti++;}
+    flow={fp,L,nodes,comet:$('#flowComet'),docH};
+    updateFlow();
+  }
+  function updateFlow(){
+    if(!flow) return;
+    const sc=window.scrollY||document.documentElement.scrollTop||0;
+    const frac=Math.max(0,Math.min(1,(sc+innerHeight*.62)/flow.docH));
+    const drawn=flow.L*frac;
+    flow.fp.style.strokeDashoffset=Math.max(0,flow.L-drawn);
+    const pt=flow.fp.getPointAtLength(drawn);
+    flow.comet.setAttribute('cx',pt.x);flow.comet.setAttribute('cy',pt.y);
+    for(const n of flow.nodes){
+      const on=drawn>=n.len;
+      if(on!==n.lit){
+        n.lit=on;
+        n.c.classList.toggle('lit',on);
+        n.ring.classList.toggle('lit',on);
+        if(on&&hasGSAP){ /* interaction pulse when the line reaches a feature */
+          gsap.fromTo(n.ring,{attr:{r:8},opacity:1},{attr:{r:30},opacity:0,duration:1,ease:'power2.out',
+            onComplete:()=>gsap.set(n.ring,{attr:{r:13},opacity:1})});
+        }
+      }
+    }
+  }
+  function startFlowTicker(){
+    if(hasGSAP) gsap.ticker.add(updateFlow);
+    else (function fl(){updateFlow();requestAnimationFrame(fl);})();
+  }
+  window.__flow={build:buildFlowLine,update:updateFlow};
+  let _frt;
+  window.addEventListener('resize',()=>{clearTimeout(_frt);_frt=setTimeout(()=>{if(hasGSAP)ScrollTrigger.refresh();buildFlowLine();},280)});
+  window.addEventListener('load',()=>{if(started){if(hasGSAP)ScrollTrigger.refresh();buildFlowLine();}});
 
   /* ───── HERO CANVAS — 2D fallback when WebGL unavailable ───── */
   if(!document.documentElement.classList.contains('gl-on')){
