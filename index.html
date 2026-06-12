@@ -510,6 +510,38 @@
   /* section header block */
   .sec-head{max-width:680px}
 
+  /* ════════════ PRELOADER ════════════ */
+  body.loading{overflow:hidden}
+  #preloader{position:fixed;inset:0;z-index:9999;background:var(--ink);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+    transition:transform 1.05s var(--ease)}
+  #preloader.done{transform:translateY(-101%)}
+  #preloader .pl-logo{height:40px;width:auto;opacity:0;transform:translateY(10px);
+    animation:plLogo .8s var(--ease) .15s forwards}
+  @keyframes plLogo{to{opacity:1;transform:none}}
+  #preloader .pl-bar{width:240px;height:2px;background:rgba(255,255,255,.13);border-radius:2px;overflow:hidden}
+  #preloader .pl-bar i{display:block;height:100%;width:0%;border-radius:2px;
+    background:linear-gradient(90deg,var(--orange),var(--orange-soft))}
+  #preloader .pl-count{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.14em;color:var(--on-dark-mute)}
+  #preloader .pl-count b{color:#fff}
+
+  /* ════════════ MANIFESTO (pinned moment) ════════════ */
+  .manifesto{background:var(--ink);color:#fff;position:relative}
+  .manifesto .pin{height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .mani-stage{position:relative;width:100%;text-align:center;padding:0 24px;min-height:120px}
+  .mani-eyebrow{position:absolute;top:-150px;left:0;right:0;text-align:center;font-size:12px;font-weight:700;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--orange-soft);opacity:0}
+  .mani-line{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);
+    font-size:clamp(34px,7.5vw,88px);font-weight:900;letter-spacing:-.035em;line-height:1.05;opacity:0}
+  .mani-line .k{background:linear-gradient(105deg,var(--orange),var(--orange-soft) 60%,#ffcba3);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .mani-prog{position:absolute;bottom:-150px;left:50%;transform:translateX(-50%);display:flex;gap:10px}
+  .mani-prog span{width:36px;height:3px;border-radius:3px;background:rgba(255,255,255,.16);overflow:hidden}
+  .mani-prog span i{display:block;height:100%;width:0;background:var(--orange);border-radius:3px}
+
+  /* gsap drives reveals → kill CSS transition to avoid double-animation */
+  html.gsap-on .reveal{transition:none}
+
   /* ════════════ RESPONSIVE ════════════ */
   @media(max-width:1020px){
     .hero .wrap{grid-template-columns:1fr;gap:50px}
@@ -541,7 +573,14 @@
   }
 </style>
 </head>
-<body>
+<body class="loading">
+
+<!-- ════════════ PRELOADER ════════════ -->
+<div id="preloader">
+  <img class="pl-logo" src="snatch-logo.png" alt="Snatch" />
+  <div class="pl-bar"><i id="plFill"></i></div>
+  <div class="pl-count"><b id="plNum">0</b>%</div>
+</div>
 
 <!-- ════════════ NAV ════════════ -->
 <nav id="nav">
@@ -619,6 +658,19 @@
     <span>AI 全自動管理&nbsp;&nbsp;&nbsp;&nbsp;0 摩擦進場&nbsp;&nbsp;&nbsp;&nbsp;零成本合規&nbsp;&nbsp;&nbsp;&nbsp;用問的就能操作&nbsp;&nbsp;&nbsp;&nbsp;會員不流失&nbsp;&nbsp;&nbsp;&nbsp;月結薪資一鍵搞定&nbsp;&nbsp;&nbsp;&nbsp;LINE 原生體驗&nbsp;&nbsp;&nbsp;&nbsp;數據可視&nbsp;&nbsp;&nbsp;&nbsp;</span>
   </div>
 </div>
+
+<!-- ════════════ MANIFESTO (pinned) ════════════ -->
+<section class="manifesto" id="manifesto">
+  <div class="pin">
+    <div class="mani-stage">
+      <div class="mani-eyebrow">三件 · 只有 Snatch 做到的事</div>
+      <div class="mani-line" data-i="0">走近，<span class="k">就辨識</span>。</div>
+      <div class="mani-line" data-i="1">開口，<span class="k">就操作</span>。</div>
+      <div class="mani-line" data-i="2">合規，<span class="k">零成本</span>。</div>
+      <div class="mani-prog"><span><i></i></span><span><i></i></span><span><i></i></span></div>
+    </div>
+  </div>
+</section>
 
 <!-- ════════════ PROBLEM ════════════ -->
 <section class="sec sec-paper" id="problem">
@@ -1197,80 +1249,142 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
 <script>
-  // nav scroll state
-  const nav = document.getElementById('nav');
-  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
-  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+(function(){
+  const $  = (s,c=document)=>c.querySelector(s);
+  const $$ = (s,c=document)=>[...c.querySelectorAll(s)];
+  const hasGSAP = !!(window.gsap && window.ScrollTrigger);
 
-  // scroll reveal
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-  }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-  // hero canvas — face-mesh / particle network
-  const cv = document.getElementById('heroCanvas');
-  const ctx = cv.getContext('2d');
-  let W,H,pts=[];
-  const DPR = Math.min(window.devicePixelRatio||1, 2);
-  function size(){
-    W = cv.clientWidth; H = cv.clientHeight;
-    cv.width = W*DPR; cv.height = H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
-    const count = Math.min(70, Math.floor(W*H/16000));
-    pts = Array.from({length:count}, ()=>({
-      x:Math.random()*W, y:Math.random()*H,
-      vx:(Math.random()-.5)*.28, vy:(Math.random()-.5)*.28,
-      r:Math.random()*1.6+.6
-    }));
+  /* ───── PRELOADER ───── */
+  const pre=$('#preloader'), plFill=$('#plFill'), plNum=$('#plNum');
+  let prog=0, ended=false;
+  function tick(){
+    prog += Math.max(0.9,(100-prog)*0.075);
+    if(prog>99.4) prog=100;
+    plFill.style.width=prog+'%'; plNum.textContent=Math.round(prog);
+    if(prog<100) requestAnimationFrame(tick); else setTimeout(endPreloader,340);
   }
-  const mouse = {x:-999,y:-999};
-  window.addEventListener('mousemove', e=>{
-    const r = cv.getBoundingClientRect();
-    mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
-  });
-  window.addEventListener('mouseleave', ()=>{mouse.x=-999;mouse.y=-999});
+  function endPreloader(){
+    if(ended) return; ended=true;
+    pre.classList.add('done');
+    document.body.classList.remove('loading');
+    setTimeout(()=>{ pre.style.display='none'; },1150);
+    startReveals();
+  }
+  requestAnimationFrame(()=>setTimeout(tick,220));
+  setTimeout(()=>{ if(!ended){ prog=100; endPreloader(); } },4500);
 
+  /* ───── LENIS smooth scroll + GSAP wiring ───── */
+  let lenis=null;
+  if(window.Lenis){
+    lenis=new Lenis({lerp:0.09,smoothWheel:true,wheelMultiplier:1});
+    window.lenis=lenis;
+    document.documentElement.style.scrollBehavior='auto';
+    if(hasGSAP){
+      gsap.registerPlugin(ScrollTrigger);
+      lenis.on('scroll',ScrollTrigger.update);
+      gsap.ticker.add(t=>lenis.raf(t*1000));
+      gsap.ticker.lagSmoothing(0);
+    }else{
+      const raf=t=>{lenis.raf(t);requestAnimationFrame(raf);};
+      requestAnimationFrame(raf);
+    }
+  }
+
+  /* ───── anchor links → smooth scroll ───── */
+  $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+    const id=a.getAttribute('href'); if(id.length<2) return;
+    const t=$(id); if(!t) return; e.preventDefault();
+    if(lenis) lenis.scrollTo(t,{offset:-68}); else t.scrollIntoView({behavior:'smooth'});
+  }));
+
+  /* ───── reveals + scroll effects (after preloader) ───── */
+  let started=false;
+  function startReveals(){
+    if(started) return; started=true;
+    if(!hasGSAP){ $$('.reveal').forEach(e=>e.classList.add('in')); return; }
+    document.documentElement.classList.add('gsap-on');
+    gsap.set('.reveal',{y:32,opacity:0});
+    ScrollTrigger.batch('.reveal',{
+      start:'top 88%',
+      onEnter:els=>gsap.to(els,{y:0,opacity:1,duration:1,ease:'power3.out',stagger:0.09,overwrite:true}),
+      once:true
+    });
+    buildManifesto();
+    buildParallax();
+    requestAnimationFrame(()=>ScrollTrigger.refresh());
+  }
+
+  /* ───── pinned manifesto timeline ───── */
+  function buildManifesto(){
+    const sec=$('#manifesto'); if(!sec) return;
+    const lines=$$('.mani-line',sec), bars=$$('.mani-prog i',sec), eb=$('.mani-eyebrow',sec);
+    gsap.set(lines,{opacity:0,y:70}); gsap.set(bars,{width:'0%'}); gsap.set(eb,{opacity:0});
+    const tl=gsap.timeline({scrollTrigger:{
+      trigger:sec,start:'top top',end:'+='+(lines.length*760),scrub:0.6,pin:'.pin',anticipatePin:1
+    }});
+    tl.to(eb,{opacity:.9,duration:0.25},0);
+    lines.forEach((ln,i)=>{
+      const at=i*1;
+      tl.fromTo(ln,{opacity:0,y:70},{opacity:1,y:0,duration:0.45,ease:'power3.out'},at)
+        .to(bars[i],{width:'100%',duration:0.85,ease:'none'},at)
+        .to(ln,{opacity:0,y:-70,duration:0.4,ease:'power2.in'}, at + (i===lines.length-1?0.9:0.78));
+    });
+  }
+
+  /* ───── subtle parallax on media ───── */
+  function buildParallax(){
+    $$('.fr-media').forEach(el=>gsap.fromTo(el,{yPercent:6},{yPercent:-6,ease:'none',
+      scrollTrigger:{trigger:el,start:'top bottom',end:'bottom top',scrub:1}}));
+  }
+
+  /* ───── nav scrolled state ───── */
+  const nav=$('#nav');
+  const navState=()=>nav.classList.toggle('scrolled',(window.scrollY||document.documentElement.scrollTop)>40);
+  window.addEventListener('scroll',navState,{passive:true}); navState();
+  if(lenis) lenis.on('scroll',navState);
+
+  /* ───── burger ───── */
+  $('#burger')?.addEventListener('click',()=>{const t=$('#cta'); if(lenis)lenis.scrollTo(t);else t.scrollIntoView({behavior:'smooth'});});
+
+  /* ───── HERO CANVAS — face-mesh / particle network ───── */
+  const cv=$('#heroCanvas'); const ctx=cv.getContext('2d');
+  let W,H,pts=[]; const DPR=Math.min(window.devicePixelRatio||1,2);
+  function size(){
+    W=cv.clientWidth; H=cv.clientHeight;
+    cv.width=W*DPR; cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+    const count=Math.min(70,Math.floor(W*H/16000));
+    pts=Array.from({length:count},()=>({x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:Math.random()*1.6+.6}));
+  }
+  const mouse={x:-999,y:-999};
+  window.addEventListener('mousemove',e=>{const r=cv.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+  window.addEventListener('mouseleave',()=>{mouse.x=-999;mouse.y=-999;});
   function draw(){
     ctx.clearRect(0,0,W,H);
     for(const p of pts){
       p.x+=p.vx; p.y+=p.vy;
-      if(p.x<0||p.x>W) p.vx*=-1;
-      if(p.y<0||p.y>H) p.vy*=-1;
-      // gentle attract to mouse
-      const dx=mouse.x-p.x, dy=mouse.y-p.y, d=Math.hypot(dx,dy);
-      if(d<160){ p.x+=dx/d*.4; p.y+=dy/d*.4; }
+      if(p.x<0||p.x>W) p.vx*=-1; if(p.y<0||p.y>H) p.vy*=-1;
+      const dx=mouse.x-p.x,dy=mouse.y-p.y,d=Math.hypot(dx,dy);
+      if(d<160){p.x+=dx/d*.4;p.y+=dy/d*.4;}
     }
-    // links
-    for(let i=0;i<pts.length;i++){
-      for(let j=i+1;j<pts.length;j++){
-        const a=pts[i], b=pts[j];
-        const dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
-        if(d<128){
-          const al=(1-d/128);
-          ctx.strokeStyle=`rgba(255,107,26,${al*0.22})`;
-          ctx.lineWidth=al*1;
-          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
-        }
-      }
+    for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
+      const a=pts[i],b=pts[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);
+      if(d<128){const al=1-d/128;ctx.strokeStyle=`rgba(255,107,26,${al*0.22})`;ctx.lineWidth=al;
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
     }
-    // nodes
     for(const p of pts){
-      const dm=Math.hypot(mouse.x-p.x, mouse.y-p.y);
-      const near = dm<160;
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle = near ? 'rgba(255,138,71,.9)' : 'rgba(255,255,255,.32)';
-      ctx.fill();
+      const near=Math.hypot(mouse.x-p.x,mouse.y-p.y)<160;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=near?'rgba(255,138,71,.9)':'rgba(255,255,255,.32)';ctx.fill();
     }
     requestAnimationFrame(draw);
   }
-  size(); draw();
-  window.addEventListener('resize', size);
-
-  // burger -> jump to CTA on mobile
-  document.getElementById('burger').addEventListener('click', ()=>{
-    document.getElementById('cta').scrollIntoView({behavior:'smooth'});
-  });
+  size(); draw(); window.addEventListener('resize',()=>{size();if(hasGSAP)ScrollTrigger.refresh();});
+})();
 </script>
 </body>
 </html>
