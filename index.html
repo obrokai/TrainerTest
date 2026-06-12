@@ -445,6 +445,68 @@
   .foot-bot .tags span{font-size:11px;color:var(--on-dark-mute);border:1px solid var(--line-dark);
     padding:5px 12px;border-radius:100px}
 
+  /* ════════════ WHY / DIFFERENTIATORS ════════════ */
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:56px}
+  .why-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:38px 34px;overflow:hidden;transition:.45s var(--ease)}
+  .why-card:hover{transform:translateY(-6px);box-shadow:0 30px 60px -28px rgba(20,20,30,.22)}
+  .why-card.hl{background:linear-gradient(165deg,#fff6f0,#fff);border-color:rgba(255,107,26,.28)}
+  .why-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg,var(--orange),var(--orange-soft));transform:scaleX(0);
+    transform-origin:left;transition:.5s var(--ease)}
+  .why-card:hover::before{transform:scaleX(1)}
+  .why-tag{display:inline-block;font-family:var(--mono);font-size:11.5px;font-weight:700;
+    letter-spacing:.12em;color:var(--orange-deep);background:#fff3ec;padding:6px 13px;border-radius:100px;margin-bottom:24px}
+  .why-ic{width:60px;height:60px;border-radius:17px;display:grid;place-items:center;margin-bottom:24px;
+    background:linear-gradient(150deg,var(--orange),var(--orange-deep));color:#fff;
+    box-shadow:0 16px 34px -14px rgba(255,107,26,.6)}
+  .why-ic svg{width:30px;height:30px}
+  .why-card h3{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:14px;color:var(--fg)}
+  .why-card p{font-size:15px;color:var(--fg-mute);line-height:1.7;margin-bottom:24px}
+  .why-card p strong{color:var(--orange-deep);font-weight:700}
+  .why-points{display:flex;flex-wrap:wrap;gap:9px}
+  .why-points span{font-size:12.5px;font-weight:600;color:#555;background:var(--paper-2);
+    padding:8px 14px;border-radius:100px;border:1px solid var(--line)}
+  .why-card.hl .why-points span{background:#fff;border-color:rgba(255,107,26,.2)}
+
+  /* ════════════ COMPLIANCE / ZERO COST ════════════ */
+  .on-dark .lead strong{color:#fff;font-weight:700}
+  .comp-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:stretch;margin-top:56px}
+  .comp-costs{display:flex;flex-direction:column;gap:14px}
+  .cost-card{display:flex;align-items:center;gap:18px;background:var(--ink-2);
+    border:1px solid var(--line-dark);border-radius:16px;padding:20px 22px;transition:.4s var(--ease)}
+  .cost-card:hover{border-color:rgba(255,107,26,.3);transform:translateX(5px)}
+  .cost-card .ci{width:46px;height:46px;border-radius:12px;flex:0 0 auto;display:grid;place-items:center;
+    background:rgba(255,255,255,.05);color:var(--on-dark-mute)}
+  .cost-card .ci svg{width:22px;height:22px}
+  .cost-card .cmid{flex:1;min-width:0}
+  .cost-card .cmid .cn{font-size:17px;font-weight:700;color:#fff;letter-spacing:-.01em}
+  .cost-card .cmid .cd{font-size:12.5px;color:var(--on-dark-soft);text-decoration:line-through;
+    text-decoration-color:rgba(255,107,26,.6);margin-top:3px}
+  .cost-card .cx{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;
+    color:var(--orange-soft);background:rgba(255,107,26,.12);padding:8px 15px;border-radius:100px;flex:0 0 auto}
+  .cost-card .cx svg{width:13px;height:13px}
+  .comp-zero{background:linear-gradient(160deg,var(--orange),var(--orange-deep));border-radius:var(--r-lg);
+    padding:42px 38px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+  .comp-zero::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(circle at 85% 5%,rgba(255,255,255,.22),transparent 46%)}
+  .comp-zero>*{position:relative;z-index:2}
+  .comp-zero .z-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.85);letter-spacing:.05em;margin-bottom:10px}
+  .comp-zero .z-num{font-family:var(--mono);font-size:clamp(58px,8vw,84px);font-weight:700;color:#fff;
+    line-height:.85;letter-spacing:-.03em}
+  .comp-zero .z-sub{font-size:16px;font-weight:600;color:#fff;margin:16px 0 26px;letter-spacing:.02em}
+  .comp-zero .z-list{display:flex;flex-direction:column;gap:13px}
+  .comp-zero .z-list li{display:flex;align-items:flex-start;gap:11px;font-size:14px;color:rgba(255,255,255,.96);
+    font-weight:500;list-style:none}
+  .comp-zero .z-list li .ck{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.22);
+    display:grid;place-items:center;flex:0 0 auto;margin-top:1px}
+  .comp-zero .z-list li .ck svg{width:12px;height:12px}
+  .comp-save{display:flex;align-items:center;gap:11px;margin-top:46px;font-size:17px;font-weight:600;color:#fff}
+  .comp-save .si{width:34px;height:34px;border-radius:50%;background:rgba(255,107,26,.14);color:var(--orange-soft);
+    display:grid;place-items:center;flex:0 0 auto}
+  .comp-save .si svg{width:18px;height:18px}
+  .comp-save b{color:var(--orange-soft);font-family:var(--mono);font-weight:700}
+
   /* section header block */
   .sec-head{max-width:680px}
 
@@ -459,6 +521,8 @@
     .frow{grid-template-columns:1fr;gap:40px}
     .frow.flip .fr-media{order:0}
     .res-grid{grid-template-columns:1fr}
+    .why-grid{grid-template-columns:1fr}
+    .comp-wrap{grid-template-columns:1fr}
   }
   @media(max-width:680px){
     .sec{padding:80px 0}
@@ -488,9 +552,10 @@
     <div class="nav-links">
       <a href="#problem">痛點</a>
       <a href="#system">系統全覽</a>
+      <a href="#why">差異化</a>
       <a href="#member">會員體驗</a>
-      <a href="#desk">櫃檯後台</a>
       <a href="#owner">營運報表</a>
+      <a href="#compliance">零成本合規</a>
     </div>
     <div class="nav-cta">
       <a href="#cta" class="btn btn-primary">預約 Demo</a>
@@ -550,8 +615,8 @@
 <!-- ════════════ MARQUEE ════════════ -->
 <div class="strip">
   <div class="track">
-    <span>0 摩擦進場&nbsp;&nbsp;&nbsp;&nbsp;用問的就能操作&nbsp;&nbsp;&nbsp;&nbsp;會員不流失&nbsp;&nbsp;&nbsp;&nbsp;月結薪資一鍵搞定&nbsp;&nbsp;&nbsp;&nbsp;LINE 原生體驗&nbsp;&nbsp;&nbsp;&nbsp;數據可視&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <span>0 摩擦進場&nbsp;&nbsp;&nbsp;&nbsp;用問的就能操作&nbsp;&nbsp;&nbsp;&nbsp;會員不流失&nbsp;&nbsp;&nbsp;&nbsp;月結薪資一鍵搞定&nbsp;&nbsp;&nbsp;&nbsp;LINE 原生體驗&nbsp;&nbsp;&nbsp;&nbsp;數據可視&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span>AI 全自動管理&nbsp;&nbsp;&nbsp;&nbsp;0 摩擦進場&nbsp;&nbsp;&nbsp;&nbsp;零成本合規&nbsp;&nbsp;&nbsp;&nbsp;用問的就能操作&nbsp;&nbsp;&nbsp;&nbsp;會員不流失&nbsp;&nbsp;&nbsp;&nbsp;月結薪資一鍵搞定&nbsp;&nbsp;&nbsp;&nbsp;LINE 原生體驗&nbsp;&nbsp;&nbsp;&nbsp;數據可視&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <span>AI 全自動管理&nbsp;&nbsp;&nbsp;&nbsp;0 摩擦進場&nbsp;&nbsp;&nbsp;&nbsp;零成本合規&nbsp;&nbsp;&nbsp;&nbsp;用問的就能操作&nbsp;&nbsp;&nbsp;&nbsp;會員不流失&nbsp;&nbsp;&nbsp;&nbsp;月結薪資一鍵搞定&nbsp;&nbsp;&nbsp;&nbsp;LINE 原生體驗&nbsp;&nbsp;&nbsp;&nbsp;數據可視&nbsp;&nbsp;&nbsp;&nbsp;</span>
   </div>
 </div>
 
@@ -630,6 +695,33 @@
           <div class="mi"><svg viewBox="0 0 24 24" fill="none"><path d="M21 11.5c0 4.1-4 7.5-9 7.5-1.2 0-2.4-.2-3.4-.6L4 20l1.2-3.2C4.4 15.5 4 13.6 4 11.5 4 7.4 8 4 12 4s9 3.4 9 7.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
           <div><h4>LINE 會員</h4><p>查詢 · 預約 · 通知</p></div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ WHY SNATCH · DIFFERENTIATORS ════════════ -->
+<section class="sec sec-paper" id="why">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">為什麼是 Snatch</span>
+      <h2 class="h-sec">競爭者能做的，我們都能做。<br>真正的差距，在這兩件事。</h2>
+      <p class="lead" style="margin-top:22px">市面上系統有的功能，Snatch 一樣不少。但有兩件事，只有我們做得到——也正是健身房最「有感」的地方。</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal d1">
+        <span class="why-tag">差異化 01</span>
+        <div class="why-ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 4.4L18 9l-4.2 1.6L12 15l-1.8-4.4L6 9l4.2-1.6L12 3z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M18.5 14.5l.7 1.7 1.8.6-1.8.7-.7 1.7-.7-1.7-1.8-.7 1.8-.6.7-1.7z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+        <h3>用 AI 管理健身房</h3>
+        <p>從進場、約課、提醒到報表，整套後台<strong>用「說的」就能操作</strong>。AI 主動盯住每一個風險，把被動補救變成主動經營——這是傳統管理系統做不到的。</p>
+        <div class="why-points"><span>自然語言操作後台</span><span>主動風險提醒</span><span>報表也能用問的</span></div>
+      </div>
+      <div class="why-card hl reveal d2">
+        <span class="why-tag">差異化 02</span>
+        <div class="why-ic"><svg viewBox="0 0 24 24" fill="none"><path d="M3 8V5a2 2 0 012-2h3M16 3h3a2 2 0 012 2v3M21 16v3a2 2 0 01-2 2h-3M8 21H5a2 2 0 01-2-2v-3" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="11" r="2.4" stroke="#fff" stroke-width="1.9"/><path d="M8 17c.6-1.6 2.1-2.4 4-2.4s3.4.8 4 2.4" stroke="#fff" stroke-width="1.9" stroke-linecap="round"/></svg></div>
+        <h3>無摩擦的人臉辨識</h3>
+        <p>重點是「<strong>無摩擦</strong>」：走近就辨識，<strong>不刷卡、不掏手機、不停下腳步</strong>。尖峰時段也不必排隊，會員體驗從進門那一秒就開始。</p>
+        <div class="why-points"><span>0 動作進場</span><span>不必刷卡 / 掏手機</span><span>尖峰不排隊</span></div>
       </div>
     </div>
   </div>
@@ -956,6 +1048,50 @@
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- ════════════ ZERO-COST COMPLIANCE ════════════ -->
+<section class="sec sec-dark on-dark" id="compliance">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">安全與合規</span>
+      <h2 class="h-sec">合規經營，<br>一毛錢成本都不用。</h2>
+      <p class="lead" style="margin-top:22px">健身房收的預付會費，法規要求要有消費者保障機制。市面上的做法，動輒得花上<strong>十幾萬到幾十萬</strong>——導入 Snatch，這些通通不需要。</p>
+    </div>
+    <div class="comp-wrap">
+      <div class="comp-costs">
+        <div class="cost-card reveal d1">
+          <div class="ci"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-5 9 5M5 9v9m14-9v9M3 19h18M8 12v4M12 12v4M16 12v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="cmid"><div class="cn">信託（信託帳戶）</div><div class="cd">傳統合規做法 · NT$ 十幾萬起</div></div>
+          <div class="cx"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>不需要</div>
+        </div>
+        <div class="cost-card reveal d2">
+          <div class="ci"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="cmid"><div class="cn">履約保障</div><div class="cd">傳統合規做法 · NT$ 十幾萬起</div></div>
+          <div class="cx"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>不需要</div>
+        </div>
+        <div class="cost-card reveal d3">
+          <div class="ci"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.7"/></svg></div>
+          <div class="cmid"><div class="cn">質押</div><div class="cd">傳統合規做法 · NT$ 十幾萬起</div></div>
+          <div class="cx"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>不需要</div>
+        </div>
+      </div>
+      <div class="comp-zero reveal d2">
+        <div class="z-label">你的合規成本</div>
+        <div class="z-num">NT$0</div>
+        <div class="z-sub">安全 · 合規 · 零負擔</div>
+        <ul class="z-list">
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>省下動輒十幾萬到幾十萬的費用</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>安全、合規地經營每一筆會費</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>把預算留給教練、設備與服務</li>
+        </ul>
+      </div>
+    </div>
+    <div class="comp-save reveal">
+      <span class="si"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M7 8h7a3 3 0 010 6H9a3 3 0 000 6h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      同樣合規，別人花<b>十幾萬～幾十萬</b>，你花 <b>NT$0</b>。
+    </div>
   </div>
 </section>
 
