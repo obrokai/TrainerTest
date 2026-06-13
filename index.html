@@ -144,6 +144,8 @@
   .hero-sub{font-size:clamp(17px,2vw,22px);color:var(--on-dark-mute);max-width:620px;
     line-height:1.65;margin-bottom:42px;letter-spacing:.04em}
   .hero-sub b{color:rgba(255,255,255,.92);font-weight:600}
+  .hero-sub2{display:inline-block;margin-top:14px;font-size:clamp(14px,1.5vw,16px);
+    line-height:1.7;letter-spacing:.01em;color:var(--on-dark-mute);font-weight:400}
   .hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:46px}
   .hero-tags{display:flex;flex-wrap:wrap;gap:10px}
   .hero-tags .tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;
@@ -653,7 +655,7 @@
     <div class="hero-body">
       <span class="hero-eyebrow"><span class="dot"></span>流程與體驗導覽</span>
       <h1>健身房的每一步，<br><span class="grad">都自動跑起來。</span></h1>
-      <p class="hero-sub"><b>AI 整合 × LINE 綁定 × 一條龍服務</b></p>
+      <p class="hero-sub"><b>AI 整合 × LINE 綁定 × 一條龍服務</b><br><span class="hero-sub2">學員加官方 LINE 就能綁定會員、約課、購課、收提醒，不必下載 App；櫃檯到老闆報表，同一套系統全包。</span></p>
       <div class="hero-actions">
         <a href="#cta" class="btn btn-primary">預約現場 Demo<svg class="arr" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <a href="#system" class="btn btn-ghost">看系統如何運作</a>
@@ -810,7 +812,7 @@
             <div class="ph-top">
               <span class="bk">‹</span>
               <span class="av2"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L5 13h5l-1 9 9-12h-5l3-8z" fill="#FF6B1A"/></svg></span>
-              <span class="ti">Muku Gym 慕谷健身房<small>LINE 官方帳號</small></span>
+              <span class="ti">星核健身房<small>LINE 官方帳號</small></span>
             </div>
             <div class="ph-body">
               <div class="memcard">
@@ -905,7 +907,7 @@
       </div>
       <div class="fr-media reveal d1">
         <div class="dash">
-          <div class="dash-bar"><i></i><i></i><i></i><span class="url">app.mukugym.com</span></div>
+          <div class="dash-bar"><i></i><i></i><i></i><span class="url">app.starcore.fit</span></div>
           <div class="dash-body">
             <div class="dash-side">
               <div class="si on"><span class="d"></span>即時看板</div>
@@ -981,7 +983,7 @@
     <div class="frow">
       <div class="fr-media reveal">
         <div class="dash">
-          <div class="dash-bar"><i></i><i></i><i></i><span class="url">app.mukugym.com / 報表</span></div>
+          <div class="dash-bar"><i></i><i></i><i></i><span class="url">app.starcore.fit / 報表</span></div>
           <div class="dash-body" style="min-height:280px">
             <div class="dash-side">
               <div class="si"><span class="d"></span>即時看板</div>
@@ -1058,7 +1060,7 @@
       </div>
       <div class="fr-media reveal d1">
         <div class="dash">
-          <div class="dash-bar"><i></i><i></i><i></i><span class="url">app.mukugym.com / 薪資</span></div>
+          <div class="dash-bar"><i></i><i></i><i></i><span class="url">app.starcore.fit / 薪資</span></div>
           <div style="padding:18px">
             <div style="display:flex;gap:10px;margin-bottom:14px">
               <div style="flex:1;background:#faf9f7;border:1px solid #f0efec;border-radius:10px;padding:11px"><div style="font-size:9.5px;color:#aaa;font-weight:600">完課堂數</div><div style="font-family:var(--mono);font-size:17px;font-weight:700">88</div></div>
@@ -1430,6 +1432,7 @@
     try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:'high-performance'});}
     catch(e){return;}
     document.documentElement.classList.add('gl-on');
+    if('outputColorSpace' in renderer) renderer.outputColorSpace=THREE.SRGBColorSpace;
     renderer.setClearColor(0x000000,0);
     const scene=new THREE.Scene();
     scene.fog=new THREE.FogExp2(0x0a0a0d,0.05);
@@ -1456,7 +1459,8 @@
     const ICO=new THREE.IcosahedronGeometry(2.6,1);
     const wire=new THREE.Mesh(ICO,new THREE.MeshBasicMaterial({color:0xff6b1a,wireframe:true,transparent:true,opacity:.5}));
     const inner=new THREE.Mesh(new THREE.IcosahedronGeometry(1.5,0),new THREE.MeshBasicMaterial({color:0xff8a47,wireframe:true,transparent:true,opacity:.22}));
-    const dots=new THREE.Points(ICO,new THREE.PointsMaterial({color:0xffd9bd,size:.18,map:texWhite,transparent:true,opacity:.9,depthWrite:false,blending:THREE.AdditiveBlending}));
+    /* warmer + dimmer vertex points on phones — avoids green subpixel fringing on OLED */
+    const dots=new THREE.Points(ICO,new THREE.PointsMaterial({color:LITE?0xffb784:0xffd9bd,size:LITE?.14:.18,map:texOrange,transparent:true,opacity:LITE?.6:.9,depthWrite:false,blending:THREE.AdditiveBlending}));
     const ring=new THREE.Mesh(new THREE.TorusGeometry(3.6,.012,8,140),new THREE.MeshBasicMaterial({color:0xff6b1a,transparent:true,opacity:.3}));
     ring.rotation.x=Math.PI/2.4;
     /* halo glow around the sphere — wide soft blur-gradient layers */
@@ -1475,7 +1479,8 @@
       scene.add(p);return p;
     }
     const isMobile=innerWidth<700;
-    const stars=field(isMobile?420:1000,[40,24,30],0xffffff,.16,.55,texWhite);
+    /* warm white on phones so bright star points don't fringe green on OLED panels */
+    const stars=field(isMobile?420:1000,[40,24,30],LITE?0xffe6d2:0xffffff,LITE?.14:.16,LITE?.42:.55,LITE?texOrange:texWhite);
     const embers=field(isMobile?90:200,[34,20,26],0xff8a47,.3,.7,texOrange);
 
     const tgt={x:2.6,y:0,scale:1};
