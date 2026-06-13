@@ -1329,32 +1329,6 @@
   }
   magnetize();
 
-  /* ambient colour shifts between sections (body bg + 3D fog follow) */
-  function buildColorBeats(){
-    if(!hasGSAP) return;
-    [['header.hero','#0a0a0d'],
-     ['#manifesto','#120a06'],
-     ['#problem','#0a0a0d'],
-     ['#system','#0e0a13'],
-     ['#why','#130b06'],
-     ['#member','#081016'],
-     ['#desk','#0d0a08'],
-     ['#owner','#090b0e'],
-     ['#compliance','#130905'],
-     ['#cta','#150d06']
-    ].forEach(([sel,col])=>{
-      const el=document.querySelector(sel); if(!el) return;
-      const go=()=>{
-        gsap.to('body',{backgroundColor:col,duration:1.4,ease:'power2.out',overwrite:'auto'});
-        if(three&&three.fog&&window.THREE){
-          const c=new THREE.Color(col);
-          gsap.to(three.fog.color,{r:c.r,g:c.g,b:c.b,duration:1.4,ease:'power2.out',overwrite:'auto'});
-        }
-      };
-      ScrollTrigger.create({trigger:el,start:'top 55%',end:'bottom 55%',onEnter:go,onEnterBack:go});
-    });
-  }
-
   /* split block-level reveals into per-element staggered reveals;
      headings get their own bigger cinematic move */
   function autoSplitReveals(){
@@ -1382,6 +1356,9 @@
     }
     document.documentElement.classList.add('gsap-on');
     autoSplitReveals();
+    /* create the pinned manifesto FIRST — triggers made after it
+       correctly account for its pin spacer in refresh order */
+    buildManifesto();
     /* hero entrance after preloader */
     gsap.from('.hero-eyebrow,.hero h1,.hero-sub,.hero-actions,.hero-tags',
       {y:42,opacity:0,filter:'blur(8px)',duration:1.1,ease:'power3.out',stagger:.09,delay:.05,clearProps:'filter'});
@@ -1391,18 +1368,20 @@
       onEnter:els=>gsap.to(els,{y:0,opacity:1,filter:'blur(0px)',duration:1.15,ease:'power3.out',stagger:0.08,overwrite:true}),
       once:true
     });
-    /* big headings: split-text — characters rise one by one */
+    /* big headings: split-text — chars replay every time the block scrolls into view */
     $$('.reveal-big').forEach(h=>{
       const chars=splitChars(h);
       gsap.set(h,{opacity:1,y:0});
-      gsap.set(chars,{yPercent:125,opacity:0,rotate:5});
-      ScrollTrigger.create({trigger:h,start:'top 86%',once:true,
-        onEnter:()=>gsap.to(chars,{yPercent:0,opacity:1,rotate:0,duration:.9,ease:'power4.out',stagger:.04})});
+      const tl=gsap.fromTo(chars,
+        {yPercent:125,opacity:0,rotate:5},
+        {yPercent:0,opacity:1,rotate:0,duration:.9,ease:'power4.out',stagger:.04,paused:true});
+      ScrollTrigger.create({trigger:h,start:'top 82%',
+        onEnter:()=>tl.restart(true),
+        onEnterBack:()=>tl.restart(true),
+        onLeaveBack:()=>tl.pause(0)});
     });
-    buildManifesto();
     buildParallax();
     buildSceneBeats();
-    buildColorBeats();
     /* rAF is frozen in hidden tabs — race it with a timeout so init always runs */
     let booted=false;
     const boot=()=>{
