@@ -1551,7 +1551,9 @@
     if('outputColorSpace' in renderer) renderer.outputColorSpace=THREE.SRGBColorSpace;
     renderer.setClearColor(0x000000,0);
     const scene=new THREE.Scene();
-    scene.fog=new THREE.FogExp2(0x0a0a0d,0.05);
+    /* fade distant lines to pure black so the center stays clean (no dim
+       muddy haze that phones compress into green/magenta blocks) */
+    scene.fog=new THREE.FogExp2(0x000000,LITE?0.07:0.055);
     const cam=new THREE.PerspectiveCamera(50,1,0.1,120);
     cam.position.set(0,0,9.5);
 
@@ -1580,6 +1582,7 @@
     const ring=new THREE.Mesh(new THREE.TorusGeometry(3.6,.012,8,140),new THREE.MeshBasicMaterial({color:0xff6b1a,transparent:true,opacity:.3}));
     ring.rotation.x=Math.PI/2.4;
     /* halo glow around the sphere — wide soft blur-gradient layers */
+    const GLOWMUL=LITE?0.4:1;  /* dim the soft halo on phones to keep the centre clean */
     const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:texOrange,transparent:true,opacity:.3,blending:THREE.AdditiveBlending,depthWrite:false}));
     glow.scale.set(13,13,1);
     const glowCore=new THREE.Sprite(new THREE.SpriteMaterial({map:texOrange,transparent:true,opacity:.18,blending:THREE.AdditiveBlending,depthWrite:false}));
@@ -1621,8 +1624,8 @@
       inner.rotation.y=-t*.25-p*Math.PI*1.6;
       inner.rotation.z=t*.18;
       ring.rotation.z=t*.07+p*2;
-      glow.material.opacity=.26+Math.sin(t*1.1)*.06;
-      glowCore.material.opacity=.15+Math.sin(t*1.7+1)*.05;
+      glow.material.opacity=(.26+Math.sin(t*1.1)*.06)*GLOWMUL;
+      glowCore.material.opacity=(.15+Math.sin(t*1.7+1)*.05)*GLOWMUL;
       stars.rotation.y=t*.012+p*.55;
       embers.rotation.y=-t*.02-p*.4;
       /* mouse parallax orbit */
