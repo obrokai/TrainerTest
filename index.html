@@ -562,6 +562,33 @@
   .press-cta svg{width:16px;height:16px;transition:.3s var(--ease)}
   .press-card:hover .press-cta svg{transform:translateX(4px)}
 
+  /* ════════════ FEATURES TABS ════════════ */
+  .tabs{display:flex;gap:10px;justify-content:center;margin:50px 0 10px;flex-wrap:wrap}
+  .tab{font-size:14.5px;font-weight:600;color:var(--on-dark-mute);padding:12px 24px;border-radius:100px;
+    border:1px solid var(--line-dark);background:rgba(255,255,255,.03);cursor:pointer;transition:.3s var(--ease)}
+  .tab:hover{color:#fff;border-color:rgba(255,138,71,.35)}
+  .tab.active{background:var(--orange);color:#fff;border-color:var(--orange);box-shadow:0 8px 22px -8px rgba(255,107,26,.6)}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block;animation:tabIn .55s var(--ease)}
+  @keyframes tabIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  .tab-panel .frow{padding:30px 0}
+
+  /* ════════════ FAQ ════════════ */
+  .faq-list{max-width:780px;margin:50px auto 0;display:flex;flex-direction:column;gap:12px}
+  .faq-item{background:rgba(255,255,255,.04);border:1px solid var(--line-dark);border-radius:16px;
+    overflow:hidden;transition:border-color .3s var(--ease),background .3s var(--ease)}
+  .faq-item.open{border-color:rgba(255,138,71,.35);background:rgba(255,107,26,.05)}
+  .faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    font-size:16px;font-weight:700;color:#fff;text-align:left;padding:22px 26px;background:none;
+    border:none;cursor:pointer;font-family:var(--sans);letter-spacing:-.01em}
+  .faq-ic{position:relative;width:18px;height:18px;flex:0 0 auto}
+  .faq-ic::before,.faq-ic::after{content:"";position:absolute;background:var(--orange-soft);border-radius:2px;transition:.35s var(--ease)}
+  .faq-ic::before{top:8px;left:0;width:18px;height:2px}
+  .faq-ic::after{top:0;left:8px;width:2px;height:18px}
+  .faq-item.open .faq-ic::after{transform:rotate(90deg);opacity:0}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .4s var(--ease)}
+  .faq-a p{padding:0 26px 24px;font-size:14.5px;color:var(--on-dark-mute);line-height:1.75}
+
   /* section header block */
   .sec-head{max-width:680px}
 
@@ -690,7 +717,7 @@
     </a>
     <div class="nav-links">
       <a href="#system">系統全覽</a>
-      <a href="#why">差異化</a>
+      <a href="#features">功能</a>
       <a href="#compliance">零成本合規</a>
       <a href="#press">媒體報導</a>
     </div>
@@ -704,7 +731,7 @@
 <!-- ════════════ MOBILE MENU ════════════ -->
 <div id="mobileMenu" aria-hidden="true">
   <a href="#system" class="mm-link">系統全覽<span class="idx">01</span></a>
-  <a href="#why" class="mm-link">差異化<span class="idx">02</span></a>
+  <a href="#features" class="mm-link">功能<span class="idx">02</span></a>
   <a href="#compliance" class="mm-link">零成本合規<span class="idx">03</span></a>
   <a href="#press" class="mm-link">媒體報導<span class="idx">04</span></a>
   <a href="#cta" class="mm-cta">預約免費諮詢</a>
@@ -856,289 +883,146 @@
   </div>
 </section>
 
-<!-- ════════════ CHAPTER 01 ════════════ -->
-<section class="chapter">
+<!-- ════════════ FEATURES (tabbed) ════════════ -->
+<section class="sec sec-dark on-dark" id="features">
   <div class="wrap">
-    <div class="num reveal">01</div>
-    <h2 class="reveal d1">會員的一天</h2>
-    <p class="reveal d2">從 LINE 綁定到課後提醒——學員在 LINE 上的一站式體驗。</p>
-  </div>
-</section>
-
-<!-- ════════════ MEMBER · ACT 1 ════════════ -->
-<section class="sec sec-paper" id="member">
-  <div class="wrap">
-
-    <!-- row 2: LINE -->
-    <div class="frow flip">
-      <div class="fr-media reveal">
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="ph-top">
-              <span class="bk">‹</span>
-              <span class="av2"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L5 13h5l-1 9 9-12h-5l3-8z" fill="#FF6B1A"/></svg></span>
-              <span class="ti">星核健身房<small>LINE 官方帳號</small></span>
-            </div>
-            <div class="ph-body">
-              <div class="memcard">
-                <div class="lbl">會籍狀態</div>
-                <div class="exp">2026 / 12 / 31</div>
-                <div class="bar"><i></i></div>
-                <div class="sub">有效期限 · 剩餘 211 天</div>
-              </div>
-              <div class="ph-menu">
-                <div class="mm"><div class="e"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/></svg></div>我的會籍</div>
-                <div class="mm"><div class="e"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.8"/><path d="M6 19c0-3 3-4.5 6-4.5s6 1.5 6 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>我的教練</div>
-                <div class="mm"><div class="e"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 9h16M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>預約課程</div>
-                <div class="mm"><div class="e"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4h12l-1 7H7L6 4zM6 4L5 2H3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.4" fill="currentColor"/><circle cx="16" cy="20" r="1.4" fill="currentColor"/></svg></div>線上購課</div>
-                <div class="mm"><div class="e"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3a6 6 0 016 6c0 5 2 6 2 6H4s2-1 2-6a6 6 0 016-6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 19a2 2 0 004 0" stroke="currentColor" stroke-width="1.8"/></svg></div>通知中心</div>
-                <div class="mm"><div class="e"><svg viewBox="0 0 24 24" fill="none"><path d="M21 11.5c0 3.6-4 6.5-9 6.5-1 0-2-.1-2.9-.4L5 19l1-2.8C4.7 15 4 13.3 4 11.5 4 7.9 8 5 12 5s9 2.9 9 6.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>聯絡櫃檯</div>
-              </div>
-              <div class="ph-btn">綁定手機 · 立即啟用</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="fr-body reveal d1">
-        <h2>會員的一切，<br>都在熟悉的 LINE 裡。</h2>
-        <div class="flist">
-          <div class="fi"><span class="n">1</span><div><h4>圖文選單一鍵直達</h4><p>選單對應核心功能，點了就進對應頁面，不必下載 App。</p></div></div>
-          <div class="fi"><span class="n">2</span><div><h4>手機綁定即啟用</h4><p>輸入手機與驗證碼，立刻開始所有服務。</p></div></div>
-          <div class="fi"><span class="n">3</span><div><h4>會籍、堂數、教練自己查</h4><p>有效期限、剩餘堂數、綁定教練都在一頁，到期自動轉紅提醒。</p></div></div>
-        </div>
-      </div>
+    <div class="sec-head reveal">
+      <span class="eyebrow">功能總覽</span>
+      <h2 class="h-sec">一套系統，<br>三種角色都順手。</h2>
+    </div>
+    <div class="tabs reveal d1">
+      <button class="tab active" data-tab="0">會員端 · LINE</button>
+      <button class="tab" data-tab="1">櫃檯端 · 後台</button>
+      <button class="tab" data-tab="2">老闆端 · 報表</button>
     </div>
 
-    <!-- row 3: booking -->
-    <div class="frow">
-      <div class="fr-body reveal">
-        <h2>約課只要兩步，<br>不用再選教練。</h2>
-        <div class="flist">
-          <div class="fi"><span class="n">1</span><div><h4>教練已綁定，直接約</h4><p>購買後教練即固定，省去重複選教練的步驟。</p></div></div>
-          <div class="fi"><span class="n">2</span><div><h4>即時可選時段</h4><p>可選 / 已滿 / 不可選狀態一眼分辨。</p></div></div>
-          <div class="fi"><span class="n">3</span><div><h4>確認即扣堂</h4><p>確認後自動扣 1 堂並顯示剩餘堂數。</p></div></div>
-        </div>
-      </div>
-      <div class="fr-media reveal d1">
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="ph-top">
-              <span class="bk">‹</span>
-              <span class="av2"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L5 13h5l-1 9 9-12h-5l3-8z" fill="#FF6B1A"/></svg></span>
-              <span class="ti">預約課程<small>Step 1 / 2 · 選擇時段</small></span>
-            </div>
-            <div class="ph-body">
-              <div class="memcard" style="display:flex;align-items:center;gap:12px;padding:12px">
-                <div class="av" style="width:38px;height:38px;border-radius:11px;background:linear-gradient(140deg,var(--orange),var(--orange-deep));display:grid;place-items:center;color:#fff;font-weight:800">柏</div>
-                <div><div style="font-weight:700;font-size:13px">柏宇教練</div><div style="font-size:10.5px;color:#9a9aa2">你的綁定教練 · 剩 8 堂</div></div>
+    <!-- panel 0 · member / LINE -->
+    <div class="tab-panel active" data-panel="0">
+      <div class="frow flip">
+        <div class="fr-media">
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="ph-top">
+                <span class="bk">‹</span>
+                <span class="av2"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L5 13h5l-1 9 9-12h-5l3-8z" fill="#FF6B1A"/></svg></span>
+                <span class="ti">星核健身房<small>LINE 官方帳號</small></span>
               </div>
-              <div style="font-size:11px;font-weight:600;color:#777;margin-top:4px">6 / 7（週六）</div>
-              <div class="slotgrid">
-                <div class="sl">07:00</div><div class="sl off">08:00</div><div class="sl on">09:00</div>
-                <div class="sl">10:00</div><div class="sl">14:00</div><div class="sl off">15:00</div>
-                <div class="sl">16:00</div><div class="sl">18:00</div><div class="sl">19:00</div>
-              </div>
-              <div class="ph-btn" style="margin-top:auto">確認預約 · 扣 1 堂</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ════════════ CHAPTER 02 ════════════ -->
-<section class="chapter">
-  <div class="wrap">
-    <div class="num reveal">02</div>
-    <h2 class="reveal d1">櫃檯的一天</h2>
-    <p class="reveal d2">工作人員的 Adaptive UI 後台——用對話操作，讓系統主動盯住每一個風險。</p>
-  </div>
-</section>
-
-<!-- ════════════ DESK · ACT 2 ════════════ -->
-<section class="sec sec-dark on-dark" id="desk">
-  <div class="wrap">
-
-    <div class="frow">
-      <div class="fr-body reveal">
-        <h2>用「說的」，<br>就能操作後台。</h2>
-        <div class="flist">
-          <div class="fi"><span class="n">1</span><div><h4>自然語言查詢與指令</h4><p>「今天收了多少？」直接問，不必點層層選單。</p></div></div>
-          <div class="fi"><span class="n">2</span><div><h4>上方即時渲染對應 UI</h4><p>AI 把答案整理成卡片、數字、表格直接呈現。</p></div></div>
-          <div class="fi"><span class="n">3</span><div><h4>左側分類快速切換</h4><p>即時看板、會員、教練、報表一鍵跳轉。</p></div></div>
-        </div>
-      </div>
-      <div class="fr-media reveal d1">
-        <div class="dash">
-          <div class="dash-bar"><i></i><i></i><i></i><span class="url">app.starcore.fit</span></div>
-          <div class="dash-body">
-            <div class="dash-side">
-              <div class="si on"><span class="d"></span>即時看板</div>
-              <div class="si"><span class="d"></span>會員管理</div>
-              <div class="si"><span class="d"></span>教練管理</div>
-              <div class="si"><span class="d"></span>財務報表</div>
-              <div class="si"><span class="d"></span>系統設定</div>
-            </div>
-            <div class="dash-main">
-              <div class="kpi-row">
-                <div class="kpi"><div class="k1">本月收入</div><div class="k2 or">NT$284K</div><div class="k3">▲ +12%</div></div>
-                <div class="kpi"><div class="k1">月會籍占比</div><div class="k2">62%</div><div class="k3">▲ +4%</div></div>
-              </div>
-              <div class="chartbox">
-                <div class="cb" style="height:40%"></div><div class="cb" style="height:52%"></div>
-                <div class="cb" style="height:46%"></div><div class="cb" style="height:64%"></div>
-                <div class="cb" style="height:58%"></div><div class="cb" style="height:78%"></div>
-                <div class="cb" style="height:70%"></div><div class="cb" style="height:92%"></div>
-              </div>
-            </div>
-          </div>
-          <div class="dash-chat">
-            <div class="ci">輸入問題或指令⋯⋯ 「本月收入比上個月多多少？」</div>
-            <div class="cs"><svg viewBox="0 0 24 24" fill="none"><path d="M12 19V6M6 12l6-6 6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sec-head reveal" style="margin-top:60px">
-      <span class="eyebrow">風險，系統替你盯著</span>
-      <h2 class="h-sec">每一則提醒，<br>都附帶「下一步動作」。</h2>
-    </div>
-    <div class="risk-grid">
-      <div class="risk-card reveal d1">
-        <div class="rt"><span class="ri"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M4 19c0-2.8 2.2-4.5 5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M17 13v6M14 16h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><h4>新學員到店</h4></div>
-        <p class="miniline">尚未建檔的訪客，系統引導 LINE 一鍵綁定。</p>
-        <span class="act">立即建立會員 →</span>
-      </div>
-      <div class="risk-card reveal d2">
-        <div class="rt"><span class="ri"><svg viewBox="0 0 24 24" fill="none"><path d="M20 14.5A8 8 0 119.5 4a6.5 6.5 0 1010.5 10.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span><h4>沉睡會員</h4></div>
-        <p class="miniline">月會籍有效，但已 35 天未進場。</p>
-        <span class="act">發送關懷訊息 →</span>
-      </div>
-      <div class="risk-card reveal d3">
-        <div class="rt"><span class="ri"><svg viewBox="0 0 24 24" fill="none"><path d="M5 19V10M12 19V5M19 19v-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><h4>堂數不足</h4></div>
-        <p class="miniline">教練課進行中，剩餘堂數僅 2 堂。</p>
-        <span class="act">推薦加購方案 →</span>
-      </div>
-      <div class="risk-card reveal d4">
-        <div class="rt"><span class="ri"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l9 16H3l9-16z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4M12 16.5v.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><h4>人數上限</h4></div>
-        <p class="miniline">現場 49 / 49 人，已達場館容留上限。</p>
-        <span class="act">置頂紅色警示 →</span>
-      </div>
-    </div>
-    <p class="risk-foot reveal">把<b>被動補救</b>，變成<b>主動經營</b>。</p>
-  </div>
-</section>
-
-<!-- ════════════ CHAPTER 03 ════════════ -->
-<section class="chapter">
-  <div class="wrap">
-    <div class="num reveal">03</div>
-    <h2 class="reveal d1">老闆與教練的視角</h2>
-    <p class="reveal d2">從收入到課務的營運報表——把每天發生的事，變成可決策的數字。</p>
-  </div>
-</section>
-
-<!-- ════════════ OWNER · ACT 3 ════════════ -->
-<section class="sec sec-paper" id="owner">
-  <div class="wrap">
-
-    <div class="frow">
-      <div class="fr-media reveal">
-        <div class="dash">
-          <div class="dash-bar"><i></i><i></i><i></i><span class="url">app.starcore.fit / 報表</span></div>
-          <div class="dash-body" style="min-height:280px">
-            <div class="dash-side">
-              <div class="si"><span class="d"></span>即時看板</div>
-              <div class="si"><span class="d"></span>會員管理</div>
-              <div class="si"><span class="d"></span>教練管理</div>
-              <div class="si on"><span class="d"></span>財務報表</div>
-            </div>
-            <div class="dash-main">
-              <div class="kpi-row" style="grid-template-columns:repeat(2,1fr)">
-                <div class="kpi"><div class="k1">今日收入</div><div class="k2 or">NT$12,600</div><div class="k3">▲ +8% 昨日</div></div>
-                <div class="kpi"><div class="k1">本月新增</div><div class="k2">18 人</div><div class="k3">▲ +3 人</div></div>
-              </div>
-              <div class="chartbox" style="align-items:stretch;gap:14px">
-                <div style="flex:1.4;display:flex;align-items:flex-end;gap:5px">
-                  <div class="cb" style="height:38%"></div><div class="cb" style="height:50%"></div>
-                  <div class="cb" style="height:44%"></div><div class="cb" style="height:62%"></div>
-                  <div class="cb" style="height:55%"></div><div class="cb" style="height:80%"></div>
-                  <div class="cb" style="height:72%"></div>
+              <div class="ph-body">
+                <div class="memcard">
+                  <div class="lbl">會籍狀態</div>
+                  <div class="exp">2026 / 12 / 31</div>
+                  <div class="bar"><i></i></div>
+                  <div class="sub">有效期限 · 剩餘 211 天</div>
                 </div>
-                <div style="flex:1;display:grid;place-items:center">
-                  <div style="width:74px;height:74px;border-radius:50%;background:conic-gradient(var(--orange) 0 62%,var(--orange-soft) 62% 92%,#f0d9c8 92% 100%);display:grid;place-items:center">
-                    <div style="width:44px;height:44px;border-radius:50%;background:#fff"></div>
+                <div class="ph-menu">
+                  <div class="mm"><div class="e"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/></svg></div>我的會籍</div>
+                  <div class="mm"><div class="e"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.8"/><path d="M6 19c0-3 3-4.5 6-4.5s6 1.5 6 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>我的教練</div>
+                  <div class="mm"><div class="e"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 9h16M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>預約課程</div>
+                  <div class="mm"><div class="e"><svg viewBox="0 0 24 24" fill="none"><path d="M6 4h12l-1 7H7L6 4zM6 4L5 2H3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="20" r="1.4" fill="currentColor"/><circle cx="16" cy="20" r="1.4" fill="currentColor"/></svg></div>線上購課</div>
+                  <div class="mm"><div class="e"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3a6 6 0 016 6c0 5 2 6 2 6H4s2-1 2-6a6 6 0 016-6z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 19a2 2 0 004 0" stroke="currentColor" stroke-width="1.8"/></svg></div>通知中心</div>
+                  <div class="mm"><div class="e"><svg viewBox="0 0 24 24" fill="none"><path d="M21 11.5c0 3.6-4 6.5-9 6.5-1 0-2-.1-2.9-.4L5 19l1-2.8C4.7 15 4 13.3 4 11.5 4 7.9 8 5 12 5s9 2.9 9 6.5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></div>聯絡櫃檯</div>
+                </div>
+                <div class="ph-btn">綁定手機 · 立即啟用</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="fr-body">
+          <h2>會員的一切，<br>都在熟悉的 LINE 裡。</h2>
+          <div class="flist">
+            <div class="fi"><span class="n">1</span><div><h4>加 LINE 一鍵綁定</h4><p>輸入手機與驗證碼即啟用，不必下載 App。</p></div></div>
+            <div class="fi"><span class="n">2</span><div><h4>約課、購課、查會籍</h4><p>圖文選單點了就到，剩餘堂數、綁定教練都在一頁。</p></div></div>
+            <div class="fi"><span class="n">3</span><div><h4>自動提醒不流失</h4><p>到期、堂數不足、沉睡喚回，透過 LINE 主動推播。</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- panel 1 · front desk / backend -->
+    <div class="tab-panel" data-panel="1">
+      <div class="frow">
+        <div class="fr-body">
+          <h2>用「說的」，<br>就能操作後台。</h2>
+          <div class="flist">
+            <div class="fi"><span class="n">1</span><div><h4>自然語言查詢與指令</h4><p>「今天收了多少？」直接問，不必點層層選單。</p></div></div>
+            <div class="fi"><span class="n">2</span><div><h4>AI 即時渲染對應 UI</h4><p>答案整理成卡片、數字、表格直接呈現。</p></div></div>
+            <div class="fi"><span class="n">3</span><div><h4>主動盯住每個風險</h4><p>新學員、沉睡會員、堂數不足、人數上限——每則提醒都附「下一步動作」。</p></div></div>
+          </div>
+        </div>
+        <div class="fr-media">
+          <div class="dash">
+            <div class="dash-bar"><i></i><i></i><i></i><span class="url">app.starcore.fit</span></div>
+            <div class="dash-body">
+              <div class="dash-side">
+                <div class="si on"><span class="d"></span>即時看板</div>
+                <div class="si"><span class="d"></span>會員管理</div>
+                <div class="si"><span class="d"></span>教練管理</div>
+                <div class="si"><span class="d"></span>財務報表</div>
+                <div class="si"><span class="d"></span>系統設定</div>
+              </div>
+              <div class="dash-main">
+                <div class="kpi-row">
+                  <div class="kpi"><div class="k1">本月收入</div><div class="k2 or">NT$284K</div><div class="k3">▲ +12%</div></div>
+                  <div class="kpi"><div class="k1">月會籍占比</div><div class="k2">62%</div><div class="k3">▲ +4%</div></div>
+                </div>
+                <div class="chartbox">
+                  <div class="cb" style="height:40%"></div><div class="cb" style="height:52%"></div>
+                  <div class="cb" style="height:46%"></div><div class="cb" style="height:64%"></div>
+                  <div class="cb" style="height:58%"></div><div class="cb" style="height:78%"></div>
+                  <div class="cb" style="height:70%"></div><div class="cb" style="height:92%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="dash-chat">
+              <div class="ci">輸入問題或指令⋯⋯ 「本月收入比上個月多多少？」</div>
+              <div class="cs"><svg viewBox="0 0 24 24" fill="none"><path d="M12 19V6M6 12l6-6 6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- panel 2 · owner / reports -->
+    <div class="tab-panel" data-panel="2">
+      <div class="frow flip">
+        <div class="fr-media">
+          <div class="dash">
+            <div class="dash-bar"><i></i><i></i><i></i><span class="url">app.starcore.fit / 報表</span></div>
+            <div class="dash-body" style="min-height:280px">
+              <div class="dash-side">
+                <div class="si"><span class="d"></span>即時看板</div>
+                <div class="si"><span class="d"></span>會員管理</div>
+                <div class="si"><span class="d"></span>教練管理</div>
+                <div class="si on"><span class="d"></span>財務報表</div>
+              </div>
+              <div class="dash-main">
+                <div class="kpi-row" style="grid-template-columns:repeat(2,1fr)">
+                  <div class="kpi"><div class="k1">今日收入</div><div class="k2 or">NT$12,600</div><div class="k3">▲ +8% 昨日</div></div>
+                  <div class="kpi"><div class="k1">本月新增</div><div class="k2">18 人</div><div class="k3">▲ +3 人</div></div>
+                </div>
+                <div class="chartbox" style="align-items:stretch;gap:14px">
+                  <div style="flex:1.4;display:flex;align-items:flex-end;gap:5px">
+                    <div class="cb" style="height:38%"></div><div class="cb" style="height:50%"></div>
+                    <div class="cb" style="height:44%"></div><div class="cb" style="height:62%"></div>
+                    <div class="cb" style="height:55%"></div><div class="cb" style="height:80%"></div>
+                    <div class="cb" style="height:72%"></div>
+                  </div>
+                  <div style="flex:1;display:grid;place-items:center">
+                    <div style="width:74px;height:74px;border-radius:50%;background:conic-gradient(var(--orange) 0 62%,var(--orange-soft) 62% 92%,#f0d9c8 92% 100%);display:grid;place-items:center">
+                      <div style="width:44px;height:44px;border-radius:50%;background:#fff"></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="fr-body reveal d1">
-        <h2>一眼看懂今天<br>賺多少、來多少人。</h2>
-        <div class="flist">
-          <div class="fi"><span class="n">1</span><div><h4>即時 KPI</h4><p>今日收入、本月收入、新增會員、在場人數一排到位。</p></div></div>
-          <div class="fi"><span class="n">2</span><div><h4>收入趨勢與來源</h4><p>12 個月折線 + 月會籍 / 教練課 / 場租佔比。</p></div></div>
-          <div class="fi"><span class="n">3</span><div><h4>全橘色一致圖表</h4><p>單一色階呈現，不被多餘顏色干擾判讀。</p></div></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="frow flip">
-      <div class="fr-body reveal">
-        <h2>把要流失的會員，<br>提前抓回來。</h2>
-        <div class="flist">
-          <div class="fi"><span class="n">1</span><div><h4>到期名單一鍵提醒</h4><p>7 / 14 / 30 天篩選，批次傳送續約提醒。</p></div></div>
-          <div class="fi"><span class="n">2</span><div><h4>沉睡名單主動喚回</h4><p>超過 30 天未進場自動列出，發送關懷訊息。</p></div></div>
-          <div class="fi"><span class="n">3</span><div><h4>轉換漏斗看成效</h4><p>會員 → 試上 → 購課，每段轉換率清楚量化。</p></div></div>
-        </div>
-      </div>
-      <div class="fr-media reveal d1">
-        <div style="width:100%;max-width:460px;background:#fff;border-radius:18px;padding:30px;box-shadow:0 40px 90px -34px rgba(20,20,30,.3),0 0 0 1px rgba(0,0,0,.05)">
-          <div style="font-size:12px;font-weight:700;color:#999;letter-spacing:.04em;margin-bottom:22px">銷售轉換漏斗</div>
-          <div class="funnel">
-            <div class="fn"><div class="fbar">會員名單</div><span class="pct">320</span></div>
-            <div class="fn"><div class="fbar">試上一堂</div><span class="pct">90</span></div>
-            <div class="fn"><div class="fbar">購買課程</div><span class="pct">58</span></div>
-          </div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:26px;padding-top:22px;border-top:1px solid #f0efec">
-            <div><div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--orange-deep)">18%</div><div style="font-size:11px;color:#999">試上轉換</div></div>
-            <div><div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--fg)">64%</div><div style="font-size:11px;color:#999">購課轉換</div></div>
-            <div><div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--fg)">14 天</div><div style="font-size:11px;color:#999">平均週期</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="frow">
-      <div class="fr-body reveal">
-        <h2>多教練排課、月結薪資，<br>一頁搞定。</h2>
-        <div class="flist">
-          <div class="fi"><span class="n">1</span><div><h4>教練 filter 篩選</h4><p>可單看一位教練，或「全部」並列檢視。</p></div></div>
-          <div class="fi"><span class="n">2</span><div><h4>同時段並列顯示</h4><p>同一格最多並列多位教練的課，一目了然。</p></div></div>
-          <div class="fi"><span class="n">3</span><div><h4>月結一鍵確認</h4><p>完課堂數 × 堂費自動結算，可匯出 PDF / Excel。</p></div></div>
-        </div>
-      </div>
-      <div class="fr-media reveal d1">
-        <div class="dash">
-          <div class="dash-bar"><i></i><i></i><i></i><span class="url">app.starcore.fit / 薪資</span></div>
-          <div style="padding:18px">
-            <div style="display:flex;gap:10px;margin-bottom:14px">
-              <div style="flex:1;background:#faf9f7;border:1px solid #f0efec;border-radius:10px;padding:11px"><div style="font-size:9.5px;color:#aaa;font-weight:600">完課堂數</div><div style="font-family:var(--mono);font-size:17px;font-weight:700">88</div></div>
-              <div style="flex:1;background:#faf9f7;border:1px solid #f0efec;border-radius:10px;padding:11px"><div style="font-size:9.5px;color:#aaa;font-weight:600">本月薪資</div><div style="font-family:var(--mono);font-size:17px;font-weight:700;color:var(--orange-deep)">NT$56,620</div></div>
-              <div style="flex:1;background:#faf9f7;border:1px solid #f0efec;border-radius:10px;padding:11px"><div style="font-size:9.5px;color:#aaa;font-weight:600">獎金</div><div style="font-family:var(--mono);font-size:17px;font-weight:700">NT$31,400</div></div>
-            </div>
-            <div style="border:1px solid #f0efec;border-radius:10px;overflow:hidden">
-              <div style="display:flex;font-size:10.5px;color:#999;background:#fafafa;padding:9px 12px;font-weight:600"><span style="flex:1.4">教練</span><span style="flex:1">完課</span><span style="flex:1.2">堂費</span><span style="flex:.8">狀態</span></div>
-              <div style="display:flex;font-size:11px;padding:10px 12px;border-top:1px solid #f3f3f1;align-items:center"><span style="flex:1.4;font-weight:600">柏宇教練</span><span style="flex:1">32 堂</span><span style="flex:1.2">NT$28,800</span><span style="flex:.8"><span style="font-size:9.5px;background:#fff3ec;color:var(--orange-deep);padding:3px 8px;border-radius:6px;font-weight:700">待確認</span></span></div>
-              <div style="display:flex;font-size:11px;padding:10px 12px;border-top:1px solid #f3f3f1;align-items:center"><span style="flex:1.4;font-weight:600">芷晴教練</span><span style="flex:1">26 堂</span><span style="flex:1.2">NT$23,400</span><span style="flex:.8"><span style="font-size:9.5px;background:#e9f9ee;color:#28a745;padding:3px 8px;border-radius:6px;font-weight:700">已結算</span></span></div>
-              <div style="display:flex;font-size:11px;padding:10px 12px;border-top:1px solid #f3f3f1;align-items:center"><span style="flex:1.4;font-weight:600">建宏教練</span><span style="flex:1">30 堂</span><span style="flex:1.2">NT$27,000</span><span style="flex:.8"><span style="font-size:9.5px;background:#fff3ec;color:var(--orange-deep);padding:3px 8px;border-radius:6px;font-weight:700">待確認</span></span></div>
-            </div>
-            <div style="background:var(--orange);color:#fff;text-align:center;padding:11px;border-radius:10px;font-weight:700;font-size:12.5px;margin-top:14px">一鍵確認月結</div>
+        <div class="fr-body">
+          <h2>把每天發生的事，<br>變成可決策的數字。</h2>
+          <div class="flist">
+            <div class="fi"><span class="n">1</span><div><h4>即時 KPI 一排到位</h4><p>今日收入、本月收入、新增會員、在場人數即時掌握。</p></div></div>
+            <div class="fi"><span class="n">2</span><div><h4>流失提前抓回</h4><p>到期名單一鍵提醒、沉睡名單主動喚回，轉換漏斗看成效。</p></div></div>
+            <div class="fi"><span class="n">3</span><div><h4>多教練排課、月結薪資</h4><p>完課堂數 × 堂費自動結算，可匯出 PDF / Excel。</p></div></div>
           </div>
         </div>
       </div>
@@ -1191,38 +1075,6 @@
   </div>
 </section>
 
-<!-- ════════════ DESIGN PRINCIPLES ════════════ -->
-<section class="sec sec-dark on-dark">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">設計與體驗原則</span>
-      <h2 class="h-sec">四個讓人<br>「不用學就會用」的設計</h2>
-    </div>
-    <div class="prin-grid">
-      <div class="prin reveal d1">
-        <div class="pic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l9 5-9 5-9-5 9-5z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 14l9 5 9-5" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-        <h3>一站式整合</h3>
-        <p>綁定、約課、購課、報表，一套系統全包辦。</p>
-      </div>
-      <div class="prin reveal d2">
-        <div class="pic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8L12 3z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9L19 14z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
-        <h3>Adaptive UI 對話操作</h3>
-        <p>自然語言下指令，介面隨需求即時生成。</p>
-      </div>
-      <div class="prin reveal d3">
-        <div class="pic"><svg viewBox="0 0 24 24" fill="none"><path d="M21 11.5c0 4.1-4 7.5-9 7.5-1.2 0-2.4-.2-3.4-.6L4 20l1.2-3.2C4.4 15.5 4 13.6 4 11.5 4 7.4 8 4 12 4s9 3.4 9 7.5z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
-        <h3>LINE 原生體驗</h3>
-        <p>會員不必下載 App，在最熟悉的 LINE 完成一切。</p>
-      </div>
-      <div class="prin reveal d4">
-        <div class="pic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 000 18c1.1 0 2-.9 2-2 0-.5-.2-.9-.5-1.3-.3-.3-.5-.8-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 004-4c0-4.4-4-7.9-9-7.9z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><circle cx="7.5" cy="11" r="1.1" fill="#fff"/><circle cx="12" cy="8" r="1.1" fill="#fff"/><circle cx="16" cy="10.5" r="1.1" fill="#fff"/></svg></div>
-        <h3>一致的品牌語言</h3>
-        <p>橘色識別、清楚層級，每個接觸點都像同一個品牌。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ════════════ PRESS / MEDIA ════════════ -->
 <section class="sec sec-dark on-dark" id="press">
   <div class="wrap">
@@ -1238,6 +1090,42 @@
       <h3 class="press-title">15 分鐘、300 元一堂運動教練課，你會買單嗎？冷杉科技開拓醫美減重新戰場</h3>
       <span class="press-cta">閱讀完整報導<svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
     </a>
+  </div>
+</section>
+
+<!-- ════════════ FAQ ════════════ -->
+<section class="sec sec-dark on-dark" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">常見問題</span>
+      <h2 class="h-sec">導入前，<br>你可能想知道的。</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal d1">
+        <button class="faq-q">會員一定要下載 App 嗎？<span class="faq-ic"></span></button>
+        <div class="faq-a"><p>不用。學員只要加你的官方 LINE，輸入手機與驗證碼就能綁定會員，之後查會籍、約課、購課、收提醒全部在 LINE 裡完成，不必再裝一個新的 App。</p></div>
+      </div>
+      <div class="faq-item reveal d1">
+        <button class="faq-q">現有的會員資料能轉進來嗎？<span class="faq-ic"></span></button>
+        <div class="faq-a"><p>可以。我們支援匯入你目前的會員名單與會籍、堂數資料，導入時會協助你把既有資料對應進系統，不必從零重建。</p></div>
+      </div>
+      <div class="faq-item reveal d1">
+        <button class="faq-q">導入大概需要多久？<span class="faq-ic"></span></button>
+        <div class="faq-a"><p>視門市規模與資料量而定。我們會在諮詢時盤點你的需求，規劃設定、資料匯入與教育訓練的時程，讓櫃檯能平順上手。</p></div>
+      </div>
+      <div class="faq-item reveal d1">
+        <button class="faq-q">真的不用花信託 / 履約保證的費用嗎？<span class="faq-ic"></span></button>
+        <div class="faq-a"><p>Snatch OS 的服務模式讓你能以合規方式經營預付會費，省去動輒十幾萬到幾十萬的信託、履約保證或質押成本。實際適用的合規方案，會在諮詢時依你的營運模式為你說明。</p></div>
+      </div>
+      <div class="faq-item reveal d1">
+        <button class="faq-q">支援多教練、多門市嗎？<span class="faq-ic"></span></button>
+        <div class="faq-a"><p>支援。多教練排課、月結薪資都在同一頁完成；若你有多門市的營運需求，也歡迎在諮詢時提出，我們會依規模提供合適的方案。</p></div>
+      </div>
+      <div class="faq-item reveal d1">
+        <button class="faq-q">怎麼收費？需要綁約嗎？<span class="faq-ic"></span></button>
+        <div class="faq-a"><p>方案與收費會依門市規模與功能需求量身規劃。預約免費諮詢後，我們會了解你的營運狀況，提供清楚的報價與合作方式。</p></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1418,7 +1306,7 @@
       const h=b.querySelector('h2'); if(h) h.classList.add('reveal');
       $$('.fi',b).forEach(f=>f.classList.add('reveal'));
     });
-    $$('.h-sec, .chapter h2, .fr-body h2').forEach(h=>{
+    $$('.h-sec, .chapter h2').forEach(h=>{
       h.classList.remove('reveal'); h.classList.add('reveal-big');
     });
   }
@@ -1481,7 +1369,7 @@
     const lines=$$('.mani-line',sec), bars=$$('.mani-prog i',sec), eb=$('.mani-eyebrow',sec);
     gsap.set(lines,{opacity:0,y:70}); gsap.set(bars,{width:'0%'}); gsap.set(eb,{opacity:0});
     const tl=gsap.timeline({scrollTrigger:{
-      trigger:sec,start:'top top',end:'+='+(lines.length*760),scrub:0.6,pin:'.pin',anticipatePin:1
+      trigger:sec,start:'top top',end:'+='+(lines.length*440),scrub:0.6,pin:'.pin',anticipatePin:1
     }});
     tl.to(eb,{opacity:.9,duration:0.25},0);
     lines.forEach((ln,i)=>{
@@ -1538,6 +1426,22 @@
     }
   }));
   window.addEventListener('keydown',e=>{ if(e.key==='Escape') setMenu(false); });
+
+  /* ───── feature tabs ───── */
+  const tabs=$$('.tab'), panels=$$('.tab-panel');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    const i=t.dataset.tab;
+    tabs.forEach(x=>x.classList.toggle('active',x===t));
+    panels.forEach(p=>p.classList.toggle('active',p.dataset.panel===i));
+    if(hasGSAP) ScrollTrigger.refresh();
+  }));
+
+  /* ───── FAQ accordion ───── */
+  $$('.faq-q').forEach(q=>q.addEventListener('click',()=>{
+    const item=q.parentElement, a=item.querySelector('.faq-a');
+    const open=item.classList.toggle('open');
+    a.style.maxHeight=open?a.scrollHeight+'px':'0';
+  }));
 
   /* ───── 3D SCENE (three.js) — scroll-coupled ───── */
   let three=null;
@@ -1645,11 +1549,10 @@
      ['#problem',{x:2.4,y:.2,scale:.85}],
      ['#system',{x:-2.4,y:.2,scale:.9}],
      ['#why',{x:2.4,y:0,scale:.85}],
-     ['#member',{x:-2.4,y:0,scale:.8}],
-     ['#desk',{x:2.4,y:.1,scale:.85}],
-     ['#owner',{x:-2.4,y:0,scale:.8}],
+     ['#features',{x:-2.4,y:0,scale:.8}],
      ['#compliance',{x:2.4,y:0,scale:.9}],
      ['#press',{x:-2.2,y:.1,scale:.8}],
+     ['#faq',{x:2.2,y:0,scale:.85}],
      ['#cta',{x:0,y:.3,scale:1.2}]
     ].forEach(([sel,v])=>{
       const el=document.querySelector(sel); if(!el) return;
@@ -1673,7 +1576,7 @@
     const hero=document.querySelector('header.hero');
     const xin=LITE?.07:.12, xout=LITE?.93:.88;
     const pts=[{x:LITE?w*xin:w*.5,y:hero.offsetHeight+60}];
-    ['#problem','#system','#why','#member','#desk','#owner','#compliance','#cta'].forEach((s,i)=>{
+    ['#problem','#system','#why','#features','#compliance','#press','#faq','#cta'].forEach((s,i)=>{
       const el=document.querySelector(s); if(!el) return;
       const r=el.getBoundingClientRect();
       pts.push({x:i%2?w*xout:w*xin, y:r.top+window.scrollY+r.height*.42});
