@@ -118,8 +118,40 @@
   .nav-links a:hover{color:#fff;background:rgba(255,255,255,.06)}
   .nav-cta{display:flex;align-items:center;gap:14px}
   .nav-cta .btn{padding:11px 22px;font-size:14px}
-  .nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}
-  .nav-burger span{width:22px;height:2px;background:#fff;border-radius:2px;transition:.3s}
+  .nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;position:relative;z-index:120}
+  .nav-burger span{width:24px;height:2px;background:#fff;border-radius:2px;
+    transition:transform .35s var(--ease),opacity .25s var(--ease)}
+  nav.menu-open .nav-burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  nav.menu-open .nav-burger span:nth-child(2){opacity:0;transform:scaleX(.4)}
+  nav.menu-open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  /* full-screen mobile menu */
+  body.menu-lock{overflow:hidden}
+  #mobileMenu{position:fixed;inset:0;z-index:90;
+    background:radial-gradient(120% 90% at 80% 0%,rgba(255,107,26,.12),transparent 55%),rgba(8,8,12,.97);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    display:flex;flex-direction:column;justify-content:center;gap:4px;padding:96px 32px 48px;
+    opacity:0;visibility:hidden;transform:translateY(-12px);
+    transition:opacity .45s var(--ease),transform .45s var(--ease),visibility .45s}
+  #mobileMenu.open{opacity:1;visibility:visible;transform:none}
+  #mobileMenu .mm-link{display:flex;align-items:center;justify-content:space-between;
+    font-size:30px;font-weight:800;color:#fff;letter-spacing:-.01em;padding:20px 0;
+    border-bottom:1px solid rgba(255,255,255,.07);text-decoration:none;
+    opacity:0;transform:translateY(22px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+  #mobileMenu .mm-link .idx{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--orange-soft);opacity:.8}
+  #mobileMenu.open .mm-link{opacity:1;transform:none}
+  #mobileMenu.open .mm-link:nth-child(1){transition-delay:.1s}
+  #mobileMenu.open .mm-link:nth-child(2){transition-delay:.17s}
+  #mobileMenu.open .mm-link:nth-child(3){transition-delay:.24s}
+  #mobileMenu.open .mm-link:nth-child(4){transition-delay:.31s}
+  #mobileMenu .mm-cta{margin-top:34px;justify-content:center;font-size:17px;padding:18px;
+    border-radius:100px;background:var(--orange);color:#fff;font-weight:700;text-align:center;
+    text-decoration:none;box-shadow:0 12px 30px -10px rgba(255,107,26,.6);
+    opacity:0;transform:translateY(22px);transition:opacity .5s var(--ease) .38s,transform .5s var(--ease) .38s}
+  #mobileMenu.open .mm-cta{opacity:1;transform:none}
+  #mobileMenu .mm-foot{margin-top:26px;text-align:center;font-size:12.5px;color:var(--on-dark-soft);
+    opacity:0;transition:opacity .5s var(--ease) .46s}
+  #mobileMenu.open .mm-foot{opacity:1}
 
   /* ════════════ HERO ════════════ */
   .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;
@@ -668,6 +700,16 @@
     </div>
   </div>
 </nav>
+
+<!-- ════════════ MOBILE MENU ════════════ -->
+<div id="mobileMenu" aria-hidden="true">
+  <a href="#system" class="mm-link">系統全覽<span class="idx">01</span></a>
+  <a href="#why" class="mm-link">差異化<span class="idx">02</span></a>
+  <a href="#compliance" class="mm-link">零成本合規<span class="idx">03</span></a>
+  <a href="#press" class="mm-link">媒體報導<span class="idx">04</span></a>
+  <a href="#cta" class="mm-cta">預約免費諮詢</a>
+  <div class="mm-foot">Snatch OS · 健身房智慧管理系統</div>
+</div>
 
 <!-- ════════════ HERO ════════════ -->
 <header class="hero" id="top">
@@ -1318,7 +1360,7 @@
   }
 
   /* ───── anchor links → smooth scroll ───── */
-  $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  $$('a[href^="#"]:not(.mm-link):not(.mm-cta)').forEach(a=>a.addEventListener('click',e=>{
     const id=a.getAttribute('href'); if(id.length<2) return;
     const t=$(id); if(!t) return; e.preventDefault();
     if(lenis) lenis.scrollTo(t,{offset:-68}); else t.scrollIntoView({behavior:'smooth'});
@@ -1471,7 +1513,31 @@
   if(lenis) lenis.on('scroll',navState);
 
   /* ───── burger ───── */
-  $('#burger')?.addEventListener('click',()=>{const t=$('#cta'); if(lenis)lenis.scrollTo(t);else t.scrollIntoView({behavior:'smooth'});});
+  /* ───── mobile menu ───── */
+  const burger=$('#burger'), mm=$('#mobileMenu');
+  function setMenu(open){
+    if(!burger||!mm) return;
+    nav.classList.toggle('menu-open',open);
+    mm.classList.toggle('open',open);
+    document.body.classList.toggle('menu-lock',open);
+    mm.setAttribute('aria-hidden',open?'false':'true');
+    if(lenis){ open ? lenis.stop() : lenis.start(); }
+  }
+  burger?.addEventListener('click',()=>setMenu(!mm.classList.contains('open')));
+  /* close first (restarts lenis), then scroll on the next tick so the
+     target isn't dropped while lenis was stopped */
+  $$('#mobileMenu a').forEach(a=>a.addEventListener('click',e=>{
+    const id=a.getAttribute('href');
+    setMenu(false);
+    if(id&&id.length>1){
+      const t=$(id);
+      if(t){ e.preventDefault();
+        if(lenis) setTimeout(()=>lenis.scrollTo(t,{offset:-68}),70);
+        else t.scrollIntoView({behavior:'smooth'});
+      }
+    }
+  }));
+  window.addEventListener('keydown',e=>{ if(e.key==='Escape') setMenu(false); });
 
   /* ───── 3D SCENE (three.js) — scroll-coupled ───── */
   let three=null;
