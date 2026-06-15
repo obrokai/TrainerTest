@@ -1513,7 +1513,7 @@
     const wire=new THREE.Mesh(ICO,new THREE.MeshBasicMaterial({color:0xff6b1a,wireframe:true,transparent:true,opacity:.5}));
     const inner=new THREE.Mesh(new THREE.IcosahedronGeometry(1.5,0),new THREE.MeshBasicMaterial({color:0xff8a47,wireframe:true,transparent:true,opacity:.22}));
     /* warmer + dimmer vertex points on phones — avoids green subpixel fringing on OLED */
-    const dots=new THREE.Points(ICO,new THREE.PointsMaterial({color:LITE?0xffb784:0xffd9bd,size:LITE?.14:.18,map:texOrange,transparent:true,opacity:LITE?.6:.9,depthWrite:false,blending:THREE.AdditiveBlending}));
+    const dots=new THREE.Points(ICO,new THREE.PointsMaterial({color:0xffb784,size:LITE?.14:.18,map:texOrange,transparent:true,opacity:LITE?.6:.85,depthWrite:false,blending:THREE.AdditiveBlending}));
     const ring=new THREE.Mesh(new THREE.TorusGeometry(3.6,.012,8,140),new THREE.MeshBasicMaterial({color:0xff6b1a,transparent:true,opacity:.3}));
     ring.rotation.x=Math.PI/2.4;
     /* halo glow around the sphere — wide soft blur-gradient layers */
@@ -1534,7 +1534,8 @@
     }
     const isMobile=innerWidth<700;
     /* warm white on phones so bright star points don't fringe green on OLED panels */
-    const stars=field(isMobile?420:1000,[40,24,30],LITE?0xffe6d2:0xffffff,LITE?.14:.16,LITE?.42:.55,LITE?texOrange:texWhite);
+    /* warm amber starfield (no pure white) — pure-white points fringe green on some displays */
+    const stars=field(isMobile?420:1000,[40,24,30],0xffc488,LITE?.14:.16,LITE?.42:.5,texOrange);
     const embers=field(isMobile?90:200,[34,20,26],0xff8a47,.3,.7,texOrange);
 
     const tgt={x:2.6,y:0,scale:1};
